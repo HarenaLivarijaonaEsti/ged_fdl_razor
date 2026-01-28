@@ -1,0 +1,67 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Dossiers.EditModel
+
+@{
+    ViewData["Title"] = "Modifier Dossier";
+}
+
+<h1>Modifier Dossier</h1>
+
+<h4>DossierFinancement</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Id caché -->
+            <input type="hidden" asp-for="DossierFinancement.Id" />
+
+            <!-- Titre -->
+            <div class="form-group mb-2">
+                <label asp-for="DossierFinancement.Titre" class="control-label"></label>
+                <input asp-for="DossierFinancement.Titre" class="form-control" />
+                <span asp-validation-for="DossierFinancement.Titre" class="text-danger"></span>
+            </div>
+
+            <!-- Statut -->
+            <div class="form-group mb-2">
+                <label asp-for="DossierFinancement.Statut" class="control-label"></label>
+                <select asp-for="DossierFinancement.Statut" class="form-control"
+                        asp-items="Model.StatutList">
+                </select>
+                <span asp-validation-for="DossierFinancement.Statut" class="text-danger"></span>
+            </div>
+
+            <!-- Commune -->
+            <div class="form-group mb-2">
+                <label asp-for="DossierFinancement.CommuneId" class="control-label"></label>
+                <select asp-for="DossierFinancement.CommuneId" class="form-control"
+                        asp-items="Model.CommuneList">
+                </select>
+                <span asp-validation-for="DossierFinancement.CommuneId" class="text-danger"></span>
+            </div>
+
+            <!-- Date de validation -->
+            <div class="form-group mb-2">
+                <label asp-for="DossierFinancement.DateValidation" class="control-label"></label>
+                <input asp-for="DossierFinancement.DateValidation" type="date" class="form-control" />
+                <span asp-validation-for="DossierFinancement.DateValidation" class="text-danger"></span>
+            </div>
+
+            <!-- Boutons -->
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                <a asp-page="./Index" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Retour à la liste</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

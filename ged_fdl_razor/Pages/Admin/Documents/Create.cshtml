@@ -1,0 +1,66 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Documents.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>Document</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Document.Nom" class="control-label"></label>
+                <input asp-for="Document.Nom" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Document.Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Document.Type" class="control-label"></label>
+                <select asp-for="Document.Type" class="form-control" ></select>
+                <span asp-validation-for="Document.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Document.ContentType" class="control-label"></label>
+                <input asp-for="Document.ContentType" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Document.ContentType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Document.Taille" class="control-label"></label>
+                <input asp-for="Document.Taille" class="form-control" />
+                <span asp-validation-for="Document.Taille" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Document.Contenu" class="control-label"></label>
+                <input asp-for="Document.Contenu" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Document.Contenu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Document.DossierFinancementId" class="control-label"></label>
+                <select asp-for="Document.DossierFinancementId" class ="form-control" asp-items="ViewBag.DossierFinancementId" ></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Document.DateUpload" class="control-label"></label>
+                <input asp-for="Document.DateUpload" class="form-control" />
+                <span asp-validation-for="Document.DateUpload" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

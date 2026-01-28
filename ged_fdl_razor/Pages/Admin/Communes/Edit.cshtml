@@ -1,0 +1,69 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Communes.EditModel
+
+@{
+    ViewData["Title"] = "Modifier Commune";
+}
+
+<h1>Modifier Commune</h1>
+
+<h4>Commune</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Commune.CommuneID" />
+
+            <div class="form-group mb-2">
+                <label asp-for="Commune.Nom" class="control-label"></label>
+                <input asp-for="Commune.Nom" class="form-control" />
+                <span asp-validation-for="Commune.Nom" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Commune.Email" class="control-label"></label>
+                <input asp-for="Commune.Email" class="form-control" />
+                <span asp-validation-for="Commune.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Commune.District" class="control-label"></label>
+                <input asp-for="Commune.District" class="form-control" />
+                <span asp-validation-for="Commune.District" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Commune.Region" class="control-label"></label>
+                <input asp-for="Commune.Region" class="form-control" />
+                <span asp-validation-for="Commune.Region" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" asp-for="Commune.IsActive" />
+                <label asp-for="Commune.IsActive" class="form-check-label"></label>
+            </div>
+
+            @* Afficher le champ mot de passe uniquement si MustChangePassword = true *@
+            @if (Model.Commune.MustChangePassword)
+            {
+                <div class="form-group mb-2">
+                    <label>Nouveau mot de passe</label>
+                    <input type="password" asp-for="Commune.PasswordHash" class="form-control" />
+                    <small class="form-text text-muted">
+                        L'utilisateur doit changer son mot de passe à la prochaine connexion.
+                    </small>
+                </div>
+            }
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                <a asp-page="./Index" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

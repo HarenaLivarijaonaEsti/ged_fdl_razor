@@ -1,0 +1,61 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Documents.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Document</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Document.Nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Document.Nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Document.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Document.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Document.ContentType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Document.ContentType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Document.Taille)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Document.Taille)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Document.Contenu)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Document.Contenu)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Document.DossierFinancement)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Document.DossierFinancement.Titre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Document.DateUpload)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Document.DateUpload)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Document.DocumentID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

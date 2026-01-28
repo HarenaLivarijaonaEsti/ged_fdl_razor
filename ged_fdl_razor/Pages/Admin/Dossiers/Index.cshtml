@@ -1,0 +1,66 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Dossiers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DossierFinancement[0].Titre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DossierFinancement[0].DateCreation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DossierFinancement[0].DateSoumission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DossierFinancement[0].Statut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DossierFinancement[0].Commune)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DossierFinancement[0].DateValidation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.DossierFinancement) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateSoumission)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Statut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commune.District)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateValidation)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

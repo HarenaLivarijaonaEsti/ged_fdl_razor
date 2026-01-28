@@ -1,0 +1,78 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Communes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Commune[0].Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commune[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commune[0].PasswordHash)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commune[0].MustChangePassword)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commune[0].District)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commune[0].Region)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commune[0].DateCreation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commune[0].IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Commune) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PasswordHash)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MustChangePassword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.District)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.CommuneID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.CommuneID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.CommuneID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,74 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Communes.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>Commune</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Commune.Nom" class="control-label"></label>
+                <input asp-for="Commune.Nom" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Commune.Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Commune.Email" class="control-label"></label>
+                <input asp-for="Commune.Email" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Commune.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Commune.PasswordHash" class="control-label"></label>
+                <input asp-for="Commune.PasswordHash" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Commune.PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Commune.MustChangePassword" /> @Html.DisplayNameFor(model => model.Commune.MustChangePassword)
+                </label>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Commune.District" class="control-label"></label>
+                <input asp-for="Commune.District" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Commune.District" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Commune.Region" class="control-label"></label>
+                <input asp-for="Commune.Region" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Commune.Region" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Commune.DateCreation" class="control-label"></label>
+                <input asp-for="Commune.DateCreation" class="form-control" />
+                <span asp-validation-for="Commune.DateCreation" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Commune.IsActive" /> @Html.DisplayNameFor(model => model.Commune.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
