@@ -20,9 +20,6 @@
                 @Html.DisplayNameFor(model => model.Commune[0].Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Commune[0].PasswordHash)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Commune[0].MustChangePassword)
             </th>
             <th>
@@ -41,38 +38,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Commune) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PasswordHash)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MustChangePassword)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.District)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Region)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.CommuneID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CommuneID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CommuneID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Commune)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MustChangePassword)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.District)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Region)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.CommuneID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.CommuneID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.CommuneID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

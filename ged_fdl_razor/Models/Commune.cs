@@ -25,7 +25,10 @@ namespace ged_fdl_razor.Models
         [Required]
         public string Region { get; set; } = string.Empty;
 
-        public DateTime DateCreation { get; set; } = DateTime.UtcNow;
+        [Required]
+        public string Role { get; set; } = "Commune"; // "Admin" pour l'administrateur
+
+        public DateTime DateCreation { get; set; } = DateTime.Now;
         public bool IsActive { get; set; } = true;
 
         public ICollection<DossierFinancement> Dossiers { get; set; }

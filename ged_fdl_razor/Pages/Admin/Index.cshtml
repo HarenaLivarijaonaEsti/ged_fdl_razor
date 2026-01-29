@@ -1,0 +1,19 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.IndexModel
+@{
+}
+<h1>Vous devez vous authentifier</h1>
+<br />
+@if (Model.compteValide)
+{
+    <p>
+        Erreur : ce compte est invalide
+    </p>
+    <br />
+}
+
+<form method="post">
+    <input type="text" name="username" placeholder="Login"><br /><br />
+    <input type="password" name="password" placeholder="Mot de passe"><br /><br />
+    <button>Se connecter</button>
+</form>

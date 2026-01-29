@@ -1,0 +1,54 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Remarques.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarque[0].Texte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarque[0].DossierFinancement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarque[0].Commune)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarque[0].DateCreation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Remarque) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Texte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DossierFinancement.Titre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commune.District)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreation)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.RemarqueID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.RemarqueID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.RemarqueID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

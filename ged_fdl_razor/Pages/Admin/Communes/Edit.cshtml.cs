@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ged_fdl_razor.Data;
+using ged_fdl_razor.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ged_fdl_razor.Data;
-using ged_fdl_razor.Models;
 
 namespace ged_fdl_razor.Pages.Admin.Communes
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly DataContext _context;
@@ -17,7 +19,7 @@ namespace ged_fdl_razor.Pages.Admin.Communes
         }
 
         [BindProperty]
-        public Commune Commune { get; set; } = default!;
+        public ged_fdl_razor.Models.Commune Commune { get; set; } = default!;
 
         // GET: charger la commune
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -56,7 +58,7 @@ namespace ged_fdl_razor.Pages.Admin.Communes
             // 🔹 Hachage du mot de passe si MustChangePassword est vrai
             if (Commune.MustChangePassword && !string.IsNullOrWhiteSpace(Commune.PasswordHash))
             {
-                var hasher = new PasswordHasher<Commune>();
+                var hasher = new PasswordHasher<ged_fdl_razor.Models.Commune>();
                 communeFromDb.PasswordHash = hasher.HashPassword(communeFromDb, Commune.PasswordHash);
 
                 // Après changement du mot de passe, désactiver MustChangePassword

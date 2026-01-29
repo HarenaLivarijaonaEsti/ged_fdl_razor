@@ -1,16 +1,18 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ged_fdl_razor.Data;
+using ged_fdl_razor.Enums;
+using ged_fdl_razor.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ged_fdl_razor.Data;
-using ged_fdl_razor.Models;
-using ged_fdl_razor.Enums;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ged_fdl_razor.Pages.Admin.Dossiers
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly DataContext _context;

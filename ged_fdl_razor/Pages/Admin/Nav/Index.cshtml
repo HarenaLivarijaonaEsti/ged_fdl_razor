@@ -1,0 +1,17 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Nav.IndexModel
+@using Microsoft.AspNetCore.Authorization
+@{
+    ViewData["Title"] = "Tableau de bord Admin";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Bienvenue sur l’espace administrateur. Utilisez les liens ci-dessous pour gérer les entités :</p>
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-action" asp-page="/Admin/Documents/Index">Gestion des Documents</a>
+    <a class="list-group-item list-group-item-action" asp-page="/Admin/Dossiers/Index">Gestion des Dossiers de financement</a>
+    <a class="list-group-item list-group-item-action" asp-page="/Admin/Remarques/Index">Gestion des Remarques</a>
+    <a class="list-group-item list-group-item-action" asp-page="/Admin/Communes/Index">Gestion des Communes</a>
+</div>

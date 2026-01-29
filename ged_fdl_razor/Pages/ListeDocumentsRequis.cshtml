@@ -1,0 +1,58 @@
+﻿@page
+@model ged_fdl_razor.Pages.ListeDocumentsRequisModel
+@{
+    ViewData["Title"] = "Documents requis";
+}
+
+<link rel="stylesheet" href="~/css/liste-documents-fdl.css" />
+
+<div class="fdl-container">
+
+    <div class="fdl-title">
+        <h2>Dossier de Demande de Financement</h2>
+        <p>Fonds de Développement Local (FDL)</p>
+
+        <!-- Bouton Se connecter -->
+        <div class="mt-3 text-center">
+            <a asp-page="/Commune/Login" class="btn btn-primary btn-lg">
+                Se connecter pour voir votre dossier de financement
+            </a>
+        </div>
+
+    </div>
+
+    <div class="fdl-info">
+        Après la communication effectuée par le FDL, la commune doit transmettre
+        un dossier complet de demande de financement comprenant les documents suivants :
+    </div>
+
+    <div class="fdl-card">
+        <h4>Dossier Administratif</h4>
+        <ul>
+            <li>Copie conforme du <strong>Compte administratif de l’année N-1</strong> avec avis favorable du Chef District</li>
+            <li>Copie conforme du <strong>Budget Primitif / Budget Programme de l’année N</strong> avec extrait de délibération du Conseil Communal</li>
+            <li>Copie conforme de l’<strong>Arrêté de nomination du Trésorier Communal</strong> (Commune rurale de 2ᵉ catégorie)</li>
+        </ul>
+    </div>
+
+    <div class="fdl-card">
+        <h4>Dossier Technique</h4>
+        <ul>
+            <li><strong>Fiche d’Identification du Projet (FIP)</strong> dûment remplie</li>
+            <li><strong>Croquis / Plan</strong> de l’infrastructure</li>
+            <li><strong>Devis quantitatif</strong> du coût de l’infrastructure</li>
+        </ul>
+    </div>
+
+    <div class="fdl-card">
+        <h4>Dossier Complémentaire</h4>
+        <ul>
+            <li>Extrait PDL II</li>
+            <li>Délibération du Conseil Communal</li>
+            <li>Situation foncière</li>
+            <li>Autorisation STD</li>
+            <li>Rapport final du projet antérieur financé par le FDL</li>
+        </ul>
+    </div>
+
+</div>

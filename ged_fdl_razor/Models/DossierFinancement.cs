@@ -22,7 +22,9 @@ namespace ged_fdl_razor.Models
         public Commune? Commune { get; set; }
 
         public DateTime? DateValidation { get; set; }
-        public ICollection<Remarque> Remarques { get; set; } = new List<Remarque>();
 
+        // Collections de navigation
+        public ICollection<Document> Documents { get; set; } = new List<Document>();
+        public ICollection<Remarque> Remarques { get; set; } = new List<Remarque>();
     }
 }

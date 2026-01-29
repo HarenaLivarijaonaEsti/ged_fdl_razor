@@ -1,0 +1,68 @@
+﻿@page "{id:int}"
+@model ged_fdl_razor.Pages.Commune.DossierModel
+@{
+    ViewData["Title"] = "Dossier de financement";
+}
+
+<h1>Dossier de financement de @Model.Commune.Nom</h1>
+
+<p><strong>Email :</strong> @Model.Commune.Email</p>
+<p><strong>District :</strong> @Model.Commune.District</p>
+<p><strong>Région :</strong> @Model.Commune.Region</p>
+<p><strong>Date de création :</strong> @Model.Commune.DateCreation.ToString("dd/MM/yyyy")</p>
+
+<hr />
+
+<h2>Dossiers soumis</h2>
+
+@if (Model.Commune.Dossiers.Any())
+{
+    <div class="accordion" id="dossiersAccordion">
+        @foreach (var dossier in Model.Commune.Dossiers)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading@dossier.DossierFinancementID">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse@dossier.DossierFinancementID" aria-expanded="false"
+                            aria-controls="collapse@dossier.DossierFinancementID">
+                        @dossier.Titre (@dossier.DateSoumission?.ToString("dd/MM/yyyy"))
+                    </button>
+                </h2>
+                <div id="collapse@dossier.DossierFinancementID" class="accordion-collapse collapse"
+                     aria-labelledby="heading@dossier.DossierFinancementID" data-bs-parent="#dossiersAccordion">
+                    <div class="accordion-body">
+                        <h4>Documents</h4>
+                        @if (dossier.Documents.Any())
+                        {
+                            <ul>
+                                @foreach (var doc in dossier.Documents)
+                                {
+                                    <li>@doc.Nom (@doc.Type)</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>Aucun document soumis pour ce dossier.</p>
+                        }
+
+                        @if (dossier.Remarques.Any())
+                        {
+                            <h5>Remarques</h5>
+                            <ul>
+                                @foreach (var rem in dossier.Remarques)
+                                {
+                                    <li>@rem.Texte</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Aucun dossier soumis pour cette commune.</p>
+}

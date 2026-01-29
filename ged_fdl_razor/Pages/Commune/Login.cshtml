@@ -1,0 +1,26 @@
+﻿@page
+@model ged_fdl_razor.Pages.Commune.LoginModel
+@{
+    ViewData["Title"] = "Connexion Commune";
+}
+
+<h1>Connexion Commune</h1>
+
+@if (Model.CompteInvalide)
+{
+    <div class="alert alert-danger">Login ou mot de passe incorrect</div>
+}
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label">Mot de passe</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Se connecter</button>
+</form>

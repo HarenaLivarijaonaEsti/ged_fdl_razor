@@ -1,0 +1,51 @@
+﻿@page
+@model ged_fdl_razor.Pages.Admin.Remarques.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Remarque</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Remarque.RemarqueID" />
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="Remarque.Texte" class="control-label"></label>
+                <input asp-for="Remarque.Texte" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Remarque.Texte" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remarque.DossierFinancementId" class="control-label"></label>
+                <select asp-for="Remarque.DossierFinancementId" class="form-control" asp-items="ViewBag.DossierFinancementId" ></select>
+                <span asp-validation-for="Remarque.DossierFinancementId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remarque.CommuneId" class="control-label"></label>
+                <select asp-for="Remarque.CommuneId" class="form-control" asp-items="ViewBag.CommuneId" ></select>
+                <span asp-validation-for="Remarque.CommuneId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remarque.DateCreation" class="control-label"></label>
+                <input asp-for="Remarque.DateCreation" class="form-control" />
+                <span asp-validation-for="Remarque.DateCreation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

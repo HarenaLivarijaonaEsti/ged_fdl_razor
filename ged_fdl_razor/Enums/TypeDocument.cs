@@ -1,11 +1,52 @@
-﻿namespace ged_fdl_razor.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ged_fdl_razor.Enums
 {
     public enum TypeDocument
     {
-        BudgetPrimitif,
-        CompteAdministratif,
-        Deliberation,
-        Devis,
-        RapportFinal
+        // =========================
+        // DOSSIER ADMINISTRATIF
+        // =========================
+
+        [Display(Name = "Compte administratif de l’année N-1 (avis favorable du Chef District)")]
+        CompteAdministratifN1,
+
+        [Display(Name = "Budget Primitif / Budget Programme de l’année N (extrait de délibération du Conseil Communal)")]
+        BudgetPrimitifOuProgramme,
+
+        [Display(Name = "Arrêté de nomination du Trésorier Communal (Commune rurale de 2ᵉ catégorie)")]
+        ArreteNominationTresorier,
+
+        // =========================
+        // DOSSIER TECHNIQUE
+        // =========================
+
+        [Display(Name = "Fiche d’Identification du Projet (FIP) dûment remplie")]
+        FicheIdentificationProjet,
+
+        [Display(Name = "Croquis / Plan de l’infrastructure")]
+        CroquisPlanInfrastructure,
+
+        [Display(Name = "Devis quantitatif du coût de l’infrastructure")]
+        DevisQuantitatif,
+
+        // =========================
+        // DOSSIER COMPLÉMENTAIRE
+        // =========================
+
+        [Display(Name = "Extrait du PDL II")]
+        ExtraitPdlII,
+
+        [Display(Name = "Délibération du Conseil Communal")]
+        DeliberationConseilCommunal,
+
+        [Display(Name = "Situation foncière")]
+        SituationFonciere,
+
+        [Display(Name = "Autorisation STD")]
+        AutorisationStd,
+
+        [Display(Name = "Rapport final du projet antérieur financé par le FDL")]
+        RapportFinalProjetAnterieur
     }
 }

@@ -1,58 +1,83 @@
 ﻿@page
 @model ged_fdl_razor.Pages.Admin.Documents.CreateModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
-        
-        <h1>Create</h1>
-        
-    <h4>Document</h4>
-    <hr />
-    <div class="row">
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Document</h4>
+<hr />
+
+<div class="row">
     <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Nom du document -->
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="Document.Nom" class="control-label"></label>
-                <input asp-for="Document.Nom" class="form-control" aria-required="true"/>
+                <input asp-for="Document.Nom" class="form-control" />
                 <span asp-validation-for="Document.Nom" class="text-danger"></span>
             </div>
+
+            <!-- Type de document -->
             <div class="form-group">
+                <span class="text-danger">*</span>
                 <label asp-for="Document.Type" class="control-label"></label>
-                <select asp-for="Document.Type" class="form-control" ></select>
+                <select asp-for="Document.Type"
+                        class="form-control"
+                        asp-items="ViewBag.TypeDocument">
+                    <option value="">-- Sélectionner le type de document --</option>
+                </select>
                 <span asp-validation-for="Document.Type" class="text-danger"></span>
             </div>
+
+            <!-- Dossier de financement (autocomplete) -->
             <div class="form-group">
                 <span class="text-danger">*</span>
-                <label asp-for="Document.ContentType" class="control-label"></label>
-                <input asp-for="Document.ContentType" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Document.ContentType" class="text-danger"></span>
+                <label class="control-label">Dossier de financement</label>
+
+                <input type="text"
+                       id="dossierSearch"
+                       class="form-control"
+                       placeholder="Rechercher par titre ou commune..." />
+
+                <input type="hidden"
+                       asp-for="Document.DossierFinancementId"
+                       id="DossierFinancementId" />
+
+                <ul id="dossierResults" class="list-group mt-1"></ul>
+
+                <span asp-validation-for="Document.DossierFinancementId"
+                      class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Document.Taille" class="control-label"></label>
-                <input asp-for="Document.Taille" class="form-control" />
-                <span asp-validation-for="Document.Taille" class="text-danger"></span>
-            </div>
+
+            <!-- Fichier du document -->
             <div class="form-group">
                 <span class="text-danger">*</span>
-                <label asp-for="Document.Contenu" class="control-label"></label>
-                <input asp-for="Document.Contenu" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Document.Contenu" class="text-danger"></span>
+                <label class="control-label">Fichier du document</label>
+                <input type="file"
+                       class="form-control"
+                       asp-for="UploadedFile"
+                       id="fileUpload" />
+                <span asp-validation-for="UploadedFile" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Document.DossierFinancementId" class="control-label"></label>
-                <select asp-for="Document.DossierFinancementId" class ="form-control" asp-items="ViewBag.DossierFinancementId" ></select>
-            </div>
+
+            <!-- Date de Upload -->
             <div class="form-group">
                 <label asp-for="Document.DateUpload" class="control-label"></label>
                 <input asp-for="Document.DateUpload" class="form-control" />
                 <span asp-validation-for="Document.DateUpload" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <!-- Bouton Create -->
+            <div class="form-group mt-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
 </div>
@@ -62,5 +87,57 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        const input = document.getElementById("dossierSearch");
+        const results = document.getElementById("dossierResults");
+        const hiddenId = document.getElementById("DossierFinancementId");
+
+        input.addEventListener("input", async () => {
+            const term = input.value.trim();
+            results.innerHTML = "";
+            hiddenId.value = "";
+
+            if (term.length < 3) return;
+
+            try {
+                const response = await fetch(`?handler=SearchDossiers&term=${encodeURIComponent(term)}`);
+                const data = await response.json();
+
+                data.forEach(item => {
+                    const li = document.createElement("li");
+                    li.className = "list-group-item list-group-item-action";
+                    li.textContent = item.libelle;
+
+                    li.onclick = () => {
+                        input.value = item.libelle;
+                        hiddenId.value = item.id;
+                        results.innerHTML = "";
+                    };
+
+                    results.appendChild(li);
+                });
+
+                if (data.length === 0) {
+                    const li = document.createElement("li");
+                    li.className = "list-group-item text-muted";
+                    li.textContent = "Aucun dossier trouvé";
+                    results.appendChild(li);
+                }
+
+            } catch (error) {
+                console.error("Erreur lors de la recherche :", error);
+            }
+        });
+
+        // Fermer la liste si clic en dehors
+        document.addEventListener("click", function(e) {
+            if (!input.contains(e.target) && !results.contains(e.target)) {
+                results.innerHTML = "";
+            }
+        });
+    </script>
 }
