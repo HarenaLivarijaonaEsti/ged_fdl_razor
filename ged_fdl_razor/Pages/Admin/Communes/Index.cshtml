@@ -42,8 +42,12 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Nom)
+                    <a asp-page="/Admin/Dossiers/Index"
+                       asp-route-communeId="@item.CommuneID">
+                        @item.Nom
+                    </a>
                 </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>

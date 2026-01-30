@@ -1,0 +1,59 @@
+﻿@page "{dossierId:int}"
+@model ged_fdl_razor.Pages.Commune.Dossiers.Documents.CreateModel
+@using ged_fdl_razor.Enums
+
+@{
+    ViewData["Title"] = "Ajouter un document";
+}
+<link rel="stylesheet" href="~/css/DossierDocument.css" />
+<h1>Ajouter un document au dossier</h1>
+
+@if (!Model.TypesDisponibles.Any())
+{
+    <div class="alert alert-warning">
+        Tous les types de documents requis ont déjà été déposés pour ce dossier.
+    </div>
+}
+else
+{
+    <form method="post" enctype="multipart/form-data">
+
+        <div class="form-group mb-3">
+            <label asp-for="Document.Nom" class="form-label"></label>
+            <input asp-for="Document.Nom" class="form-control" />
+            <span asp-validation-for="Document.Nom" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Document.Type" class="form-label"></label>
+            <select asp-for="Document.Type" class="form-select">
+                <option value="">-- Sélectionner le type --</option>
+                @foreach (var type in Model.TypesDisponibles)
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+            <span asp-validation-for="Document.Type" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Fichier</label>
+            <input type="file" asp-for="UploadFile" class="form-control" />
+            <span asp-validation-for="UploadFile" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Ajouter le document
+        </button>
+    </form>
+}
+
+<a asp-page="/Commune/Dossier"
+   asp-route-id="@Model.CommuneId"
+   class="btn btn-secondary mt-3">
+    Retour au dossier
+</a>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

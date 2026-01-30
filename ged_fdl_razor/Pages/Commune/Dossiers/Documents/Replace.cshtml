@@ -1,0 +1,41 @@
+﻿@page "{documentId:int}"
+@model ged_fdl_razor.Pages.Commune.Dossiers.Documents.ReplaceModel
+
+@{
+    ViewData["Title"] = "Remplacer le document";
+}
+
+<h1>Remplacer le document</h1>
+
+@if (Model.Document != null)
+{
+    <p>
+        <strong>Nom :</strong> @Model.Document.Nom <br />
+        <strong>Type :</strong> @Model.Document.Type
+    </p>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Nouveau fichier</label>
+            <input type="file"
+                   asp-for="UploadFile"
+                   class="form-control"
+                   required />
+            <span asp-validation-for="UploadFile" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-warning">
+            Remplacer
+        </button>
+
+        <a asp-page="/Commune/Dossier"
+           asp-route-id="@Model.Document.DossierFinancement!.CommuneId"
+           class="btn btn-secondary ms-2">
+            Annuler
+        </a>
+    </form>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

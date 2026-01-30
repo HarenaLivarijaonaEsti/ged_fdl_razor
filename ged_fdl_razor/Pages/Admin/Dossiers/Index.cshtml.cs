@@ -1,10 +1,8 @@
 ﻿using ged_fdl_razor.Data;
 using ged_fdl_razor.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,19 +12,28 @@ namespace ged_fdl_razor.Pages.Admin.Dossiers
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly ged_fdl_razor.Data.DataContext _context;
+        private readonly DataContext _context;
 
-        public IndexModel(ged_fdl_razor.Data.DataContext context)
+        public IndexModel(DataContext context)
         {
             _context = context;
         }
 
-        public IList<DossierFinancement> DossierFinancement { get;set; } = default!;
+        public IList<DossierFinancement> DossierFinancement { get; set; } = new List<DossierFinancement>();
 
-        public async Task OnGetAsync()
+        // 🔑 communeId reçu depuis Communes/Index
+        public async Task OnGetAsync(int? communeId)
         {
-            DossierFinancement = await _context.DossiersFinancement
-                .Include(d => d.Commune).ToListAsync();
+            IQueryable<DossierFinancement> query = _context.DossiersFinancement
+                .Include(d => d.Commune);
+
+            // 🔎 Filtrage par commune
+            if (communeId.HasValue)
+            {
+                query = query.Where(d => d.CommuneId == communeId);
+            }
+
+            DossierFinancement = await query.ToListAsync();
         }
     }
 }

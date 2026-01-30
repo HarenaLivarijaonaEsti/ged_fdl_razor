@@ -21,17 +21,25 @@ namespace ged_fdl_razor.Pages.Admin.Documents
             _context = context;
         }
 
-        public IList<Document> Document { get; set; } = default!;
+        public IList<Document> Document { get; set; } = new List<Document>();
 
-        public async Task OnGetAsync()
+        //  Point clé : paramètre reçu depuis Dossiers/Index
+        public async Task OnGetAsync(int? dossierId)
         {
-            Document = await _context.Documents
+            IQueryable<Document> query = _context.Documents
                 .Include(d => d.DossierFinancement)
-                    .ThenInclude(df => df.Commune)
-                .ToListAsync();
+                    .ThenInclude(df => df.Commune);
+
+            //  Filtrage par dossier
+            if (dossierId.HasValue)
+            {
+                query = query.Where(d => d.DossierFinancementId == dossierId);
+            }
+
+            Document = await query.ToListAsync();
         }
 
-        // Handler pour Télécharger le fichier
+        //  Télécharger
         public async Task<IActionResult> OnGetDownloadAsync(int id)
         {
             var document = await _context.Documents
@@ -45,7 +53,7 @@ namespace ged_fdl_razor.Pages.Admin.Documents
             return File(document.Contenu, document.ContentType, fileName);
         }
 
-        // Handler pour Ouvrir le fichier dans le navigateur
+        //  Ouvrir dans le navigateur
         public async Task<IActionResult> OnGetOpenAsync(int id)
         {
             var document = await _context.Documents
@@ -56,13 +64,15 @@ namespace ged_fdl_razor.Pages.Admin.Documents
 
             string fileName = GetFileNameWithExtension(document);
 
-            // ⚡ "inline" permet d’ouvrir directement dans le navigateur
-            Response.Headers.Add("Content-Disposition", $"inline; filename=\"{fileName}\"");
+            Response.Headers.Append(
+                "Content-Disposition",
+                $"inline; filename=\"{fileName}\""
+            );
 
             return File(document.Contenu, document.ContentType);
         }
 
-        // Utilitaire pour ajouter l’extension correcte si manquante
+        //  Utilitaire extension
         private string GetFileNameWithExtension(Document document)
         {
             string extension = document.ContentType switch
@@ -75,10 +85,9 @@ namespace ged_fdl_razor.Pages.Admin.Documents
                 _ => ""
             };
 
-            if (!document.Nom.EndsWith(extension, StringComparison.OrdinalIgnoreCase))
-                return document.Nom + extension;
-
-            return document.Nom;
+            return document.Nom.EndsWith(extension, StringComparison.OrdinalIgnoreCase)
+                ? document.Nom
+                : document.Nom + extension;
         }
     }
 }

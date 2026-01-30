@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Dossier de financement";
 }
-
+<link rel="stylesheet" href="~/css/Dossier.css" />
 <h1>Dossier de financement de @Model.Commune.Nom</h1>
 
 <p><strong>Email :</strong> @Model.Commune.Email</p>
@@ -21,29 +21,76 @@
         @foreach (var dossier in Model.Commune.Dossiers)
         {
             <div class="accordion-item">
-                <h2 class="accordion-header" id="heading@dossier.DossierFinancementID">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse@dossier.DossierFinancementID" aria-expanded="false"
-                            aria-controls="collapse@dossier.DossierFinancementID">
+                <h2 class="accordion-header" id="heading@dossier.Id">
+                    <p class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse@dossier.Id" aria-expanded="false"
+                            aria-controls="collapse@dossier.Id">
                         @dossier.Titre (@dossier.DateSoumission?.ToString("dd/MM/yyyy"))
-                    </button>
+                    </p>
                 </h2>
-                <div id="collapse@dossier.DossierFinancementID" class="accordion-collapse collapse"
-                     aria-labelledby="heading@dossier.DossierFinancementID" data-bs-parent="#dossiersAccordion">
+
+                <div id="collapse@dossier.Id" class="accordion-collapse collapse"
+                     aria-labelledby="heading@dossier.Id" data-bs-parent="#dossiersAccordion">
                     <div class="accordion-body">
                         <h4>Documents</h4>
+
                         @if (dossier.Documents.Any())
                         {
-                            <ul>
-                                @foreach (var doc in dossier.Documents)
-                                {
-                                    <li>@doc.Nom (@doc.Type)</li>
-                                }
-                            </ul>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Type</th>
+                                        <th>ContentType</th>
+                                        <th>Taille</th>
+                                        <th>Fichier</th>
+                                        <th>Date Upload</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var doc in dossier.Documents)
+                                    {
+                                        <tr>
+                                            <td>@doc.Nom</td>
+                                            <td>@doc.Type</td>
+                                            <td>@doc.ContentType</td>
+                                            <td>@doc.Taille</td>
+                                            <td>
+                                                <a asp-page-handler="Download"
+                                                   asp-route-id="@doc.DocumentID"
+                                                   class="btn btn-sm btn-success">Télécharger</a>
+                                                <a asp-page-handler="Open"
+                                                   asp-route-id="@doc.DocumentID"
+                                                   class="btn btn-sm btn-primary">Ouvrir</a>
+                                            </td>
+                                            <td>@doc.DateUpload.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>
+                                                <a asp-page="/Commune/Dossiers/Documents/Replace"
+                                                   asp-route-documentId="@doc.DocumentID"
+                                                   class="btn btn-sm btn-warning">
+                                                    Remplacer
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <br />
+                            <a class="btn btn-success mb-2"
+                               asp-page="/Commune/Dossiers/Documents/Create"
+                               asp-route-dossierId="@dossier.Id">
+                                + Ajouter un document
+                            </a>
                         }
                         else
                         {
                             <p>Aucun document soumis pour ce dossier.</p>
+                            <a class="btn btn-success"
+                               asp-page="/Commune/Dossiers/Documents/Create"
+                               asp-route-dossierId="@dossier.Id">
+                                Ajouter un nouveau document
+                            </a>
                         }
 
                         @if (dossier.Remarques.Any())
@@ -65,4 +112,9 @@
 else
 {
     <p>Aucun dossier soumis pour cette commune.</p>
+    <a class="btn btn-success"
+       asp-page="/Commune/Dossiers/Create"
+       asp-route-CommuneId="@Model.Commune.CommuneID">
+        Créer un nouveau dossier
+    </a>
 }

@@ -2,104 +2,76 @@
 @model ged_fdl_razor.Pages.Admin.Documents.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Créer un document";
 }
 
-<h1>Create</h1>
-
-<h4>Document</h4>
-<hr />
+<h1>Créer un document</h1>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <!-- Nom du document -->
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label asp-for="Document.Nom" class="control-label"></label>
                 <input asp-for="Document.Nom" class="form-control" />
                 <span asp-validation-for="Document.Nom" class="text-danger"></span>
             </div>
 
+            <!-- Dossier de financement (autocomplete) -->
+            <div class="form-group mb-3">
+                <span class="text-danger">*</span>
+                <label class="control-label">Dossier de financement</label>
+                <input type="text" id="dossierSearch" class="form-control"
+                       placeholder="Rechercher par titre ou commune..." />
+                <input type="hidden" asp-for="Document.DossierFinancementId" id="DossierFinancementId" />
+                <ul id="dossierResults" class="list-group mt-1"></ul>
+                <span asp-validation-for="Document.DossierFinancementId" class="text-danger"></span>
+            </div>
+
             <!-- Type de document -->
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label asp-for="Document.Type" class="control-label"></label>
-                <select asp-for="Document.Type"
-                        class="form-control"
-                        asp-items="ViewBag.TypeDocument">
-                    <option value="">-- Sélectionner le type de document --</option>
+                <select asp-for="Document.Type" class="form-control" id="typeDocumentSelect">
+                    <option value="">-- Sélectionner le type --</option>
                 </select>
                 <span asp-validation-for="Document.Type" class="text-danger"></span>
             </div>
 
-            <!-- Dossier de financement (autocomplete) -->
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label class="control-label">Dossier de financement</label>
-
-                <input type="text"
-                       id="dossierSearch"
-                       class="form-control"
-                       placeholder="Rechercher par titre ou commune..." />
-
-                <input type="hidden"
-                       asp-for="Document.DossierFinancementId"
-                       id="DossierFinancementId" />
-
-                <ul id="dossierResults" class="list-group mt-1"></ul>
-
-                <span asp-validation-for="Document.DossierFinancementId"
-                      class="text-danger"></span>
-            </div>
-
             <!-- Fichier du document -->
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label class="control-label">Fichier du document</label>
-                <input type="file"
-                       class="form-control"
-                       asp-for="UploadedFile"
-                       id="fileUpload" />
+                <input type="file" class="form-control" asp-for="UploadedFile" />
                 <span asp-validation-for="UploadedFile" class="text-danger"></span>
-            </div>
-
-            <!-- Date de Upload -->
-            <div class="form-group">
-                <label asp-for="Document.DateUpload" class="control-label"></label>
-                <input asp-for="Document.DateUpload" class="form-control" />
-                <span asp-validation-for="Document.DateUpload" class="text-danger"></span>
             </div>
 
             <!-- Bouton Create -->
             <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Créer" class="btn btn-primary" />
             </div>
-
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 
     <script>
-        const input = document.getElementById("dossierSearch");
-        const results = document.getElementById("dossierResults");
-        const hiddenId = document.getElementById("DossierFinancementId");
+        const dossierInput = document.getElementById("dossierSearch");
+        const dossierResults = document.getElementById("dossierResults");
+        const hiddenDossierId = document.getElementById("DossierFinancementId");
+        const typeSelect = document.getElementById("typeDocumentSelect");
 
-        input.addEventListener("input", async () => {
-            const term = input.value.trim();
-            results.innerHTML = "";
-            hiddenId.value = "";
+        // Recherche dossiers autocomplete
+        dossierInput.addEventListener("input", async () => {
+            const term = dossierInput.value.trim();
+            dossierResults.innerHTML = "";
+            hiddenDossierId.value = "";
+            typeSelect.innerHTML = '<option value="">-- Sélectionner le type --</option>';
 
             if (term.length < 3) return;
 
@@ -111,32 +83,42 @@
                     const li = document.createElement("li");
                     li.className = "list-group-item list-group-item-action";
                     li.textContent = item.libelle;
+                    li.onclick = async () => {
+                        dossierInput.value = item.libelle;
+                        hiddenDossierId.value = item.id;
+                        dossierResults.innerHTML = "";
 
-                    li.onclick = () => {
-                        input.value = item.libelle;
-                        hiddenId.value = item.id;
-                        results.innerHTML = "";
+                        // Charger types disponibles pour ce dossier
+                        const typesResponse = await fetch(`?handler=GetAvailableTypes&dossierId=${item.id}`);
+                        const typesData = await typesResponse.json();
+
+                        typeSelect.innerHTML = '<option value="">-- Sélectionner le type --</option>';
+                        typesData.forEach(t => {
+                            const option = document.createElement("option");
+                            option.value = t;
+                            option.textContent = t;
+                            typeSelect.appendChild(option);
+                        });
                     };
-
-                    results.appendChild(li);
+                    dossierResults.appendChild(li);
                 });
 
                 if (data.length === 0) {
                     const li = document.createElement("li");
                     li.className = "list-group-item text-muted";
                     li.textContent = "Aucun dossier trouvé";
-                    results.appendChild(li);
+                    dossierResults.appendChild(li);
                 }
 
-            } catch (error) {
-                console.error("Erreur lors de la recherche :", error);
+            } catch (err) {
+                console.error(err);
             }
         });
 
-        // Fermer la liste si clic en dehors
-        document.addEventListener("click", function(e) {
-            if (!input.contains(e.target) && !results.contains(e.target)) {
-                results.innerHTML = "";
+        // Fermer autocomplete si clic en dehors
+        document.addEventListener("click", function (e) {
+            if (!dossierInput.contains(e.target) && !dossierResults.contains(e.target)) {
+                dossierResults.innerHTML = "";
             }
         });
     </script>

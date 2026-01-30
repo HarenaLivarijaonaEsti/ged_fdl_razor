@@ -16,10 +16,9 @@ namespace ged_fdl_razor.Pages.Commune
         }
 
         [BindProperty(SupportsGet = true)]
-        public int Id { get; set; }
+        public int Id { get; set; }  // ID de la commune
 
-        public ged_fdl_razor.Models.Commune Commune { get; set; }
-
+        public ged_fdl_razor.Models.Commune? Commune { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -33,13 +32,44 @@ namespace ged_fdl_razor.Pages.Commune
             if (Commune == null)
                 return NotFound();
 
-            // Vérifie si le mot de passe doit être changé
             if (Commune.MustChangePassword)
             {
                 return RedirectToPage("/Commune/ChangePassword", new { id = Commune.CommuneID });
             }
 
             return Page();
+        }
+
+        // Handler pour Télécharger un document
+        public async Task<IActionResult> OnGetDownloadAsync(int id)
+        {
+            var doc = await _context.Documents.FirstOrDefaultAsync(d => d.DocumentID == id);
+            if (doc == null) return NotFound();
+
+            return File(doc.Contenu, doc.ContentType, doc.Nom + GetExtension(doc.ContentType));
+        }
+
+        // Handler pour Ouvrir un document dans le navigateur
+        public async Task<IActionResult> OnGetOpenAsync(int id)
+        {
+            var doc = await _context.Documents.FirstOrDefaultAsync(d => d.DocumentID == id);
+            if (doc == null) return NotFound();
+
+            Response.Headers.Append("Content-Disposition", $"inline; filename=\"{doc.Nom}{GetExtension(doc.ContentType)}\"");
+            return File(doc.Contenu, doc.ContentType);
+        }
+
+        private string GetExtension(string contentType)
+        {
+            return contentType switch
+            {
+                "application/pdf" => ".pdf",
+                "application/msword" => ".doc",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document" => ".docx",
+                "application/vnd.ms-excel" => ".xls",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => ".xlsx",
+                _ => ""
+            };
         }
     }
 }

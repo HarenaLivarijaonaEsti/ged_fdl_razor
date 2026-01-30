@@ -37,9 +37,12 @@
     <tbody>
 @foreach (var item in Model.DossierFinancement) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titre)
-            </td>
+                <td>
+                    <a asp-page="/Admin/Documents/Index"
+                       asp-route-dossierId="@item.Id">
+                        @item.Titre
+                    </a>
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreation)
             </td>
