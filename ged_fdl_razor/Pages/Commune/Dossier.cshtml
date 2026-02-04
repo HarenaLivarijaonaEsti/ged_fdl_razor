@@ -4,18 +4,23 @@
     ViewData["Title"] = "Dossier de financement";
 }
 <link rel="stylesheet" href="~/css/Dossier.css" />
-<h1>Dossier de financement de @Model.Commune.Nom</h1>
+<h1>Dossier de financement de @(Model.Commune?.Nom ?? "Nom inconnu")</h1>
+<form method="post" asp-page-handler="Logout" class="text-end mb-3">
+    <button type="submit" class="btn btn-danger">
+        Se déconnecter
+    </button>
+</form>
 
-<p><strong>Email :</strong> @Model.Commune.Email</p>
-<p><strong>District :</strong> @Model.Commune.District</p>
-<p><strong>Région :</strong> @Model.Commune.Region</p>
-<p><strong>Date de création :</strong> @Model.Commune.DateCreation.ToString("dd/MM/yyyy")</p>
+<p><strong>Email :</strong> @(Model.Commune?.Email ?? "Non renseigné")</p>
+<p><strong>District :</strong> @(Model.Commune?.District ?? "Non renseigné")</p>
+<p><strong>Région :</strong> @(Model.Commune?.Region ?? "Non renseigné")</p>
+<p><strong>Date de création :</strong> @(Model.Commune?.DateCreation.ToString("dd/MM/yyyy") ?? "Non renseignée")</p>
 
 <hr />
 
 <h2>Dossiers soumis</h2>
 
-@if (Model.Commune.Dossiers.Any())
+@if (Model.Commune?.Dossiers?.Any() == true)
 {
     <div class="accordion" id="dossiersAccordion">
         @foreach (var dossier in Model.Commune.Dossiers)
@@ -34,7 +39,7 @@
                     <div class="accordion-body">
                         <h4>Documents</h4>
 
-                        @if (dossier.Documents.Any())
+                        @if (dossier.Documents?.Any() == true)
                         {
                             <table class="table table-striped">
                                 <thead>
@@ -93,7 +98,7 @@
                             </a>
                         }
 
-                        @if (dossier.Remarques.Any())
+                        @if (dossier.Remarques?.Any() == true)
                         {
                             <h5>Remarques</h5>
                             <ul>
@@ -114,7 +119,7 @@ else
     <p>Aucun dossier soumis pour cette commune.</p>
     <a class="btn btn-success"
        asp-page="/Commune/Dossiers/Create"
-       asp-route-CommuneId="@Model.Commune.CommuneID">
+       asp-route-CommuneId="@(Model.Commune?.CommuneID ?? 0)">
         Créer un nouveau dossier
     </a>
 }

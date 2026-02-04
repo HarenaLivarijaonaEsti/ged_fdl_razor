@@ -3,8 +3,12 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">GED FDL Accueil</h1>
-    <p><a asp-page="ListeDocumentsRequis">Voir la liste des documents à remplir</a>.</p>
-</div>
+<head>
+    <link rel="stylesheet" href="~/css/Accueil.css" />
+    <title>GED FDL Accueil</title>
+</head>
+<body class="homePage">
+    <div class="centered">
+        <a class="homePage" asp-page="ListeDocumentsRequis">Voir la liste des documents à remplir</a>
+    </div>
+</body>

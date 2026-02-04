@@ -1,0 +1,44 @@
+﻿/* ----------------------------- */
+/* Page d'accueil avec image fond */
+/* ----------------------------- */
+
+body.homePage {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* image de fond */
+    background-image: url('../images/fdl.jpg');
+    background-size: cover; /* couvre toute la page */
+    background-position: center; /* centre l'image */
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center; /* centre horizontalement */
+    align-items: flex-start; /* commence en haut */
+}
+
+/* Conteneur du lien */
+.centered {
+    margin-top: 20vh; /* distance depuis le haut pour placer le lien un peu en haut */
+    text-align: center;
+}
+
+    /* Lien bouton */
+    .centered a.homePage {
+        display: inline-block;
+        text-decoration: none;
+        background-color: rgba(59, 79, 74, 0.85); /* rouge semi-transparent */
+        color: #fff;
+        padding: 15px 30px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+        /* Effet au survol */
+        .centered a.homePage:hover {
+            background-color: rgba(59, 79, 74, 0.9);
+            transform: scale(1.05);
+        }

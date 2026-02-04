@@ -57,7 +57,7 @@ namespace ged_fdl_razor.Pages.Commune
         public async Task<IActionResult> OnGetLogout()
         {
             await HttpContext.SignOutAsync();
-            return Redirect("/ListeDocumentsRequis");
+            return Redirect("/Commune/Login");
         }
     }
 }

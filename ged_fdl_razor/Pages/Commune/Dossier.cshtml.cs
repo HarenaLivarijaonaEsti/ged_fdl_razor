@@ -1,13 +1,19 @@
+using ged_fdl_razor.Data;
+using ged_fdl_razor.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ged_fdl_razor.Data;
-using ged_fdl_razor.Models;
+
 
 namespace ged_fdl_razor.Pages.Commune
 {
+    [Authorize]
     public class DossierModel : PageModel
     {
+
         private readonly DataContext _context;
 
         public DossierModel(DataContext context)
@@ -71,5 +77,11 @@ namespace ged_fdl_razor.Pages.Commune
                 _ => ""
             };
         }
+        public async Task<IActionResult> OnPostLogoutAsync()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Commune/Login");
+        }
+
     }
 }
