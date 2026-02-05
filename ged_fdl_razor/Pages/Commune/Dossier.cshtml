@@ -3,12 +3,16 @@
 @{
     ViewData["Title"] = "Dossier de financement";
 }
-<link rel="stylesheet" href="~/css/Dossier.css" />
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/css/Dossier.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+
 <h1>Dossier de financement de @(Model.Commune?.Nom ?? "Nom inconnu")</h1>
+
 <form method="post" asp-page-handler="Logout" class="text-end mb-3">
-    <button type="submit" class="btn btn-danger">
-        Se déconnecter
-    </button>
+    <button type="submit" class="btn btn-danger">Se déconnecter</button>
 </form>
 
 <p><strong>Email :</strong> @(Model.Commune?.Email ?? "Non renseigné")</p>
@@ -28,8 +32,8 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="heading@dossier.Id">
                     <p class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse@dossier.Id" aria-expanded="false"
-                            aria-controls="collapse@dossier.Id">
+                       data-bs-target="#collapse@dossier.Id" aria-expanded="false"
+                       aria-controls="collapse@dossier.Id">
                         @dossier.Titre (@dossier.DateSoumission?.ToString("dd/MM/yyyy"))
                     </p>
                 </h2>
@@ -41,59 +45,50 @@
 
                         @if (dossier.Documents?.Any() == true)
                         {
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Nom</th>
-                                        <th>Type</th>
-                                        <th>ContentType</th>
-                                        <th>Taille</th>
-                                        <th>Fichier</th>
-                                        <th>Date Upload</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var doc in dossier.Documents)
-                                    {
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
                                         <tr>
-                                            <td>@doc.Nom</td>
-                                            <td>@doc.Type</td>
-                                            <td>@doc.ContentType</td>
-                                            <td>@doc.Taille</td>
-                                            <td>
-                                                <a asp-page-handler="Download"
-                                                   asp-route-id="@doc.DocumentID"
-                                                   class="btn btn-sm btn-success">Télécharger</a>
-                                                <a asp-page-handler="Open"
-                                                   asp-route-id="@doc.DocumentID"
-                                                   class="btn btn-sm btn-primary">Ouvrir</a>
-                                            </td>
-                                            <td>@doc.DateUpload.ToString("dd/MM/yyyy HH:mm")</td>
-                                            <td>
-                                                <a asp-page="/Commune/Dossiers/Documents/Replace"
-                                                   asp-route-documentId="@doc.DocumentID"
-                                                   class="btn btn-sm btn-warning">
-                                                    Remplacer
-                                                </a>
-                                            </td>
+                                            <th>Nom</th>
+                                            <th>Type</th>
+                                            <th>ContentType</th>
+                                            <th>Taille</th>
+                                            <th>Fichier</th>
+                                            <th>Date Upload</th>
+                                            <th>Actions</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var doc in dossier.Documents)
+                                        {
+                                            <tr>
+                                                <td data-label="Nom">@doc.Nom</td>
+                                                <td data-label="Type">@doc.Type</td>
+                                                <td data-label="ContentType">@doc.ContentType</td>
+                                                <td data-label="Taille">@doc.Taille</td>
+                                                <td data-label="Fichier">
+                                                    <a asp-page-handler="Download" asp-route-id="@doc.DocumentID" class="btn btn-sm btn-success">Télécharger</a>
+                                                    <a asp-page-handler="Open" asp-route-id="@doc.DocumentID" class="btn btn-sm btn-primary">Ouvrir</a>
+                                                </td>
+                                                <td data-label="Date Upload">@doc.DateUpload.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td data-label="Actions">
+                                                    <a asp-page="/Commune/Dossiers/Documents/Replace" asp-route-documentId="@doc.DocumentID" class="btn btn-sm btn-warning">Remplacer</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
                             <br />
-                            <a class="btn btn-success mb-2"
-                               asp-page="/Commune/Dossiers/Documents/Create"
-                               asp-route-dossierId="@dossier.Id">
+                            <a class="btn btn-success mb-2" asp-page="/Commune/Dossiers/Documents/Create" asp-route-dossierId="@dossier.Id">
                                 + Ajouter un document
                             </a>
                         }
                         else
                         {
                             <p>Aucun document soumis pour ce dossier.</p>
-                            <a class="btn btn-success"
-                               asp-page="/Commune/Dossiers/Documents/Create"
-                               asp-route-dossierId="@dossier.Id">
+                            <a class="btn btn-success" asp-page="/Commune/Dossiers/Documents/Create" asp-route-dossierId="@dossier.Id">
                                 Ajouter un nouveau document
                             </a>
                         }
@@ -117,9 +112,7 @@
 else
 {
     <p>Aucun dossier soumis pour cette commune.</p>
-    <a class="btn btn-success"
-       asp-page="/Commune/Dossiers/Create"
-       asp-route-CommuneId="@(Model.Commune?.CommuneID ?? 0)">
+    <a class="btn btn-success" asp-page="/Commune/Dossiers/Create" asp-route-CommuneId="@(Model.Commune?.CommuneID ?? 0)">
         Créer un nouveau dossier
     </a>
 }

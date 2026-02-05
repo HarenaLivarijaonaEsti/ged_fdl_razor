@@ -41,7 +41,7 @@ namespace ged_fdl_razor.Pages.Admin.Communes
             if (!ModelState.IsValid)
                 return Page();
 
-            // ⚠️ Charger l'entité depuis la DB pour éviter les erreurs EF
+            // Charger l'entité depuis la DB pour éviter les erreurs EF
             var communeFromDb = await _context.Communes
                 .FirstOrDefaultAsync(c => c.CommuneID == Commune.CommuneID);
 
@@ -55,15 +55,15 @@ namespace ged_fdl_razor.Pages.Admin.Communes
             communeFromDb.Region = Commune.Region;
             communeFromDb.IsActive = Commune.IsActive;
 
-            // 🔹 Hachage du mot de passe si MustChangePassword est vrai
-            if (Commune.MustChangePassword && !string.IsNullOrWhiteSpace(Commune.PasswordHash))
+            // 🔹 Hachage du mot de passe si un nouveau mot de passe est fourni
+            if (!string.IsNullOrWhiteSpace(Commune.PasswordHash))
             {
                 var hasher = new PasswordHasher<ged_fdl_razor.Models.Commune>();
                 communeFromDb.PasswordHash = hasher.HashPassword(communeFromDb, Commune.PasswordHash);
-
-                // Après changement du mot de passe, désactiver MustChangePassword
-                communeFromDb.MustChangePassword = false;
             }
+
+            // 🔹 Mettre à jour le booléen MustChangePassword selon la sélection de l'admin
+            communeFromDb.MustChangePassword = Commune.MustChangePassword;
 
             try
             {

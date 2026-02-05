@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Connexion Commune";
 }
-<link rel="stylesheet" href="~/css/Login.css" />
+<link rel="stylesheet" href="@(Url.Content("~/css/Login.css"))?v=@DateTime.Now.Ticks" />
 
 <div class="login-card">
     <h1>Connexion Commune</h1>
@@ -26,4 +26,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Se connecter</button>
     </form>
+
+    <p class="password-help">Mot de passe oublié ? Veuillez contacter l'administrateur.</p>
 </div>

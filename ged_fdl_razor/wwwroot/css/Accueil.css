@@ -1,44 +1,91 @@
-﻿/* ----------------------------- */
-/* Page d'accueil avec image fond */
-/* ----------------------------- */
+﻿/* -----------------------------
+   Page d'accueil avec image fond – NORMAL
+----------------------------- */
 
 body.homePage {
     margin: 0;
     padding: 0;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* image de fond */
     background-image: url('../images/fdl.jpg');
-    background-size: cover; /* couvre toute la page */
-    background-position: center; /* centre l'image */
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     display: flex;
-    justify-content: center; /* centre horizontalement */
-    align-items: flex-start; /* commence en haut */
+    justify-content: center;
+    align-items: flex-start;
 }
 
 /* Conteneur du lien */
 .centered {
-    margin-top: 20vh; /* distance depuis le haut pour placer le lien un peu en haut */
+    margin-top: 18vh;
     text-align: center;
+    padding: 0 1rem;
 }
 
     /* Lien bouton */
     .centered a.homePage {
         display: inline-block;
         text-decoration: none;
-        background-color: rgba(59, 79, 74, 0.85); /* rouge semi-transparent */
+        background-color: rgba(59, 79, 74, 0.85);
         color: #fff;
-        padding: 15px 30px;
-        font-size: 1.5rem;
+        padding: 0.8rem 2rem; /* taille confortable */
+        font-size: 1.2rem; /* taille normale */
         font-weight: bold;
-        border-radius: 8px;
-        transition: background-color 0.3s, transform 0.2s;
+        border-radius: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
-        /* Effet au survol */
-        .centered a.homePage:hover {
-            background-color: rgba(59, 79, 74, 0.9);
-            transform: scale(1.05);
+/* Effet hover (desktop uniquement) */
+@media (hover: hover) {
+    .centered a.homePage:hover {
+        background-color: rgba(59, 79, 74, 0.95);
+        transform: scale(1.03); /* petit effet */
+    }
+}
+
+/* -----------------------------
+   TABLETTES (<= 1024px)
+----------------------------- */
+@media (max-width: 1024px) {
+    .centered {
+        margin-top: 20vh;
+    }
+
+        .centered a.homePage {
+            font-size: 1.1rem;
+            padding: 0.7rem 1.5rem;
         }
+}
+
+/* -----------------------------
+   MOBILES (<= 768px)
+----------------------------- */
+@media (max-width: 768px) {
+    body.homePage {
+        align-items: center;
+    }
+
+    .centered {
+        margin-top: 5vh;
+    }
+
+        .centered a.homePage {
+            width: 100%;
+            max-width: 300px;
+            font-size: 1rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+        }
+}
+
+/* -----------------------------
+   PETITS MOBILES (<= 480px)
+----------------------------- */
+@media (max-width: 480px) {
+    .centered a.homePage {
+        font-size: 0.95rem;
+        padding: 0.6rem 1rem;
+    }
+}

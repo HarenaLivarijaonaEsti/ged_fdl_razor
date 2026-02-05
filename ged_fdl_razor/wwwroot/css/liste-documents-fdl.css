@@ -1,47 +1,182 @@
-﻿.fdl-container {
-    max-width: 900px;
-    margin: 40px auto;
-    font-family: "Segoe UI", sans-serif;
-    color: #2c3e50;
+﻿/* ============================
+   ListeDocumentsRequis – CSS Responsive Normal
+   ============================ */
+
+/* Base styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #212529;
 }
 
-.fdl-title {
+.fdl-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Titles */
+.fdl-title h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
     text-align: center;
-    margin-bottom: 30px;
 }
 
-    .fdl-title h2 {
-        color: #0d6efd;
-        font-weight: 600;
+.fdl-title p {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.fdl-title .btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+    .fdl-title .btn:hover {
+        transform: scale(1.03);
+        background-color: #0b5ed7;
     }
 
-.fdl-card {
-    background: #ffffff;
+/* Info text */
+.fdl-info {
+    font-size: 1rem;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-left: 4px solid #0d6efd;
+    margin-bottom: 30px;
     border-radius: 8px;
-    padding: 20px 25px;
+}
+
+/* Cards */
+.fdl-card {
+    background-color: #ffffff;
+    padding: 20px 15px;
     margin-bottom: 25px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
     .fdl-card h4 {
-        margin-bottom: 15px;
-        border-left: 5px solid #0d6efd;
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        border-left: 4px solid #0d6efd;
         padding-left: 10px;
     }
 
     .fdl-card ul {
-        padding-left: 20px;
+        list-style-type: disc;
+        margin-left: 30px;
     }
 
     .fdl-card li {
-        margin-bottom: 10px;
-        line-height: 1.5;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        margin-bottom: 8px;
     }
 
-.fdl-info {
-    background: #eef5ff;
-    border-left: 5px solid #0d6efd;
-    padding: 15px;
-    margin-bottom: 30px;
-    border-radius: 4px;
+/* Media Queries – Tablettes (<= 992px) */
+@media (max-width: 992px) {
+    .fdl-container {
+        padding: 0 15px;
+    }
+
+    .fdl-title h2 {
+        font-size: 1.8rem;
+    }
+
+    .fdl-title p {
+        font-size: 1.1rem;
+    }
+
+    .fdl-title .btn {
+        font-size: 0.95rem;
+        padding: 9px 18px;
+    }
+
+    .fdl-info {
+        font-size: 0.95rem;
+        padding: 14px;
+    }
+
+    .fdl-card h4 {
+        font-size: 1.3rem;
+        padding-left: 8px;
+        border-left-width: 3px;
+    }
+
+    .fdl-card li {
+        font-size: 0.95rem;
+        line-height: 1.4rem;
+    }
+}
+
+/* Media Queries – Mobiles (<= 768px) */
+@media (max-width: 768px) {
+    .fdl-title h2 {
+        font-size: 1.6rem;
+    }
+
+    .fdl-title p {
+        font-size: 1rem;
+    }
+
+    .fdl-title .btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    .fdl-info {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .fdl-card h4 {
+        font-size: 1.2rem;
+        padding-left: 6px;
+        border-left-width: 3px;
+    }
+
+    .fdl-card li {
+        font-size: 0.9rem;
+        line-height: 1.3rem;
+    }
+}
+
+/* Media Queries – Petits Mobiles (<= 480px) */
+@media (max-width: 480px) {
+    .fdl-title h2 {
+        font-size: 1.4rem;
+    }
+
+    .fdl-title p {
+        font-size: 0.9rem;
+    }
+
+    .fdl-title .btn {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+    }
+
+    .fdl-info {
+        font-size: 0.85rem;
+        padding: 10px;
+    }
+
+    .fdl-card h4 {
+        font-size: 1.1rem;
+        padding-left: 5px;
+        border-left-width: 2px;
+    }
+
+    .fdl-card li {
+        font-size: 0.85rem;
+        line-height: 1.2rem;
+    }
 }

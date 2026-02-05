@@ -1,6 +1,9 @@
 ﻿/* ============================
-   Login Commune - Style centré et moderne
+   LOGIN – Full Responsive XL++
    ============================ */
+html {
+    font-size: 22px; /* 1rem = 18px au lieu de 16px par défaut */
+}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -8,78 +11,83 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 10px;
 }
 
 .login-card {
     background-color: #ffffff;
-    padding: 40px 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    padding: 80px 70px; /* plus grand padding */
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     width: 100%;
-    max-width: 400px;
+    max-width: 900px;
     text-align: center;
-    transition: transform 0.2s;
+    transition: transform 0.2s ease;
 }
 
     .login-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px);
     }
 
 h1 {
     color: #0d6efd;
-    font-size: 2.2rem;
+    font-size: 3.2rem; /* XXL */
     font-weight: 700;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 28px;
 }
 
 label {
-    font-weight: 500;
+    font-weight: 600;
     text-align: left;
+    font-size: 1.8rem; /* énorme */
 }
 
 input.form-control {
-    padding: 12px 15px;
-    border-radius: 8px;
+    padding: 22px 18px;
+    border-radius: 10px;
     border: 1px solid #ced4da;
-    transition: all 0.3s;
+    font-size: 1.8rem; /* très grand */
+    transition: all 0.3s ease-in-out;
 }
 
     input.form-control:focus {
         border-color: #0d6efd;
-        box-shadow: 0 0 8px rgba(13,110,253,0.25);
+        box-shadow: 0 0 12px rgba(13,110,253,0.4);
         outline: none;
     }
 
 button.btn-primary {
-    padding: 12px;
-    border-radius: 8px;
+    padding: 22px;
+    border-radius: 10px;
     font-weight: 600;
     background-color: #0d6efd;
     border: none;
     color: #fff;
     cursor: pointer;
-    transition: all 0.3s;
+    font-size: 1.8rem;
+    transition: all 0.3s ease-in-out;
 }
 
     button.btn-primary:hover {
         background-color: #0b5ed7;
-        transform: translateY(-2px);
+        transform: translateY(-3px);
     }
 
 .alert {
-    padding: 12px 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    padding: 18px 22px;
+    border-radius: 10px;
+    margin-bottom: 20px;
     font-weight: 500;
     text-align: center;
+    font-size: 1.5rem;
 }
 
 .alert-danger {
@@ -88,24 +96,101 @@ button.btn-primary {
     border: 1px solid #f5c2c7;
 }
 
-/* Validation messages */
 span.text-danger {
-    font-size: 0.85rem;
+    font-size: 1.2rem;
     color: #dc3545;
 }
 
-/* Responsive pour mobile */
-@media (max-width: 480px) {
+.password-help {
+    font-size: 1.7rem;
+    color: grey !important;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* ============================
+   TABLETTES (≤ 992px)
+   ============================ */
+@media (max-width: 992px) {
     .login-card {
-        padding: 30px 20px;
+        max-width: 90%;
+        padding: 70px 50px;
     }
 
     h1 {
-        font-size: 1.8rem;
+        font-size: 3rem;
+    }
+
+    label {
+        font-size: 1.6rem;
     }
 
     input.form-control,
     button.btn-primary {
-        font-size: 0.95rem;
+        font-size: 1.6rem;
+        padding: 20px 16px;
+    }
+
+    .password-help {
+        font-size: 1.6rem;
+    }
+}
+
+/* ============================
+   MOBILES (≤ 768px)
+   ============================ */
+@media (max-width: 768px) {
+    .login-card {
+        max-width: 100%;
+        width: 100%;
+        padding: 75px 40px;
+        margin: 0 auto;
+        border-radius: 12px;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+    }
+
+    label {
+        font-size: 1.5rem;
+    }
+
+    input.form-control,
+    button.btn-primary {
+        font-size: 1.6rem;
+        padding: 20px 16px;
+    }
+
+    .password-help {
+        font-size: 1.6rem;
+    }
+}
+
+/* ============================
+   PETITS MOBILES (≤ 480px)
+   ============================ */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 70px 25px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    label {
+        font-size: 1.4rem;
+    }
+
+    input.form-control,
+    button.btn-primary {
+        font-size: 1.5rem;
+        padding: 18px 14px;
+    }
+
+    .password-help {
+        font-size: 1.5rem;
     }
 }

@@ -44,17 +44,22 @@
                 <label asp-for="Commune.IsActive" class="form-check-label"></label>
             </div>
 
-            @* Afficher le champ mot de passe uniquement si MustChangePassword = true *@
-            @if (Model.Commune.MustChangePassword)
-            {
-                <div class="form-group mb-2">
-                    <label>Nouveau mot de passe</label>
-                    <input type="password" asp-for="Commune.PasswordHash" class="form-control" />
-                    <small class="form-text text-muted">
-                        L'utilisateur doit changer son mot de passe à la prochaine connexion.
-                    </small>
-                </div>
-            }
+            <!-- Nouveau mot de passe administrable -->
+            <div class="form-group mb-2">
+                <label>Nouveau mot de passe</label>
+                <input type="password" asp-for="Commune.PasswordHash" class="form-control" />
+                <small class="form-text text-muted">
+                    Laissez vide pour ne pas changer le mot de passe.
+                </small>
+            </div>
+
+            <!-- Checkbox MustChangePassword -->
+            <div class="form-check mb-3">
+                <input class="form-check-input" asp-for="Commune.MustChangePassword" />
+                <label asp-for="Commune.MustChangePassword" class="form-check-label">
+                    L'utilisateur doit changer son mot de passe à la prochaine connexion
+                </label>
+            </div>
 
             <div class="form-group mt-3">
                 <button type="submit" class="btn btn-primary">Enregistrer</button>

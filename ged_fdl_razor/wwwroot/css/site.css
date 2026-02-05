@@ -1,31 +1,95 @@
+/* ============================
+   Base font-size responsive – Version XL
+   ============================ */
 html {
-  font-size: 14px;
+    font-size: 22px; /* base desktop/tablette */
+    position: relative;
+    min-height: 100%;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+@media (max-width: 1200px) {
+    html {
+        font-size: 20px; /* grand écran large */
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+@media (max-width: 992px) {
+    html {
+        font-size: 22px; /* tablettes XL */
+    }
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+@media (max-width: 768px) {
+    html {
+        font-size: 24px; /* mobiles grands */
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 26px; /* petits mobiles, XXL */
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* ============================
+   Focus & outline – XL version
+   ============================ */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.15rem white, 0 0 0 0.35rem #258cfb;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* ============================
+   Form-floating placeholder align
+   ============================ */
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+    font-size: 1.2rem;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* ============================
+   RESPONSIVE – ajustements mobile XL
+   ============================ */
+@media (max-width: 768px) {
+    html {
+        font-size: 24px;
+    }
+
+    body {
+        margin-bottom: 50px;
+    }
+
+    .form-floating > .form-control-plaintext::placeholder,
+    .form-floating > .form-control::placeholder {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 26px;
+    }
+
+    body {
+        margin-bottom: 40px;
+    }
+
+    .form-floating > .form-control-plaintext::placeholder,
+    .form-floating > .form-control::placeholder {
+        font-size: 1.6rem;
+    }
 }

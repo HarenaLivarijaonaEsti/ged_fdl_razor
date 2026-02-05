@@ -4,25 +4,61 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- Ajouter DbContext ---
+// --- DbContext ---
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// --- Ajouter l'authentification Cookie ---
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+// --- Authentification Cookie séparée pour Admin et Commune ---
+builder.Services.AddAuthentication()
+    .AddCookie("AdminCookie", options =>
     {
-        options.LoginPath = "/Admin"; // Page de login
-        options.AccessDeniedPath = "/Admin"; // Optional : page en cas d'accès refusé
-        options.ExpireTimeSpan = TimeSpan.FromHours(1); // Durée du cookie
+        options.LoginPath = "/Admin/Index";
+        options.AccessDeniedPath = "/Admin/Index";
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    })
+    .AddCookie("CommuneCookie", options =>
+    {
+        options.LoginPath = "/Commune/Login";
+        options.AccessDeniedPath = "/Commune/Login";
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
     });
 
-// --- Ajouter Razor Pages ---
-builder.Services.AddRazorPages();
+// --- Razor Pages avec conventions ---
+builder.Services.AddRazorPages(options =>
+{
+    // Toutes les pages du dossier Admin nécessitent Auth Admin
+    options.Conventions.AuthorizeFolder("/Admin", "AdminPolicy");
+
+    // Page de login Admin accessible sans auth
+    options.Conventions.AllowAnonymousToPage("/Admin/Index");
+
+    // Toutes les pages du dossier Commune nécessitent Auth Commune
+    options.Conventions.AuthorizeFolder("/Commune", "CommunePolicy");
+
+    // Page de login Commune accessible sans auth
+    options.Conventions.AllowAnonymousToPage("/Commune/Login");
+});
+
+// --- Ajouter les politiques pour séparer les rôles ---
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+    {
+        policy.AddAuthenticationSchemes("AdminCookie");
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim(System.Security.Claims.ClaimTypes.Role, "Admin");
+    });
+
+    options.AddPolicy("CommunePolicy", policy =>
+    {
+        policy.AddAuthenticationSchemes("CommuneCookie");
+        policy.RequireAuthenticatedUser();
+    });
+});
 
 var app = builder.Build();
 
-// --- Initialiser la DB (équivalent CreateDbIfNotExists) ---
+// --- Initialisation DB ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -38,7 +74,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// --- Middleware pipeline ---
+// --- Middleware ---
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -50,10 +86,20 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Authentification et autorisation
+// Authentification & autorisation
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
+// Redirection index.html -> /
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/index.html")
+    {
+        context.Response.Redirect("/");
+        return;
+    }
+    await next();
+});
 
+app.MapRazorPages();
 app.Run();
