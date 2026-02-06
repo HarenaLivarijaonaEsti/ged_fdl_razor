@@ -1,0 +1,140 @@
+﻿/* ====================
+   RESET & BASE
+==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('../images/fdl.jpg') center / cover no-repeat;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+    /* ====================
+   OVERLAY
+==================== */
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55));
+        z-index: 0;
+    }
+
+/* ====================
+   FORM CONTAINER
+==================== */
+.fdl-login-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 40px 35px;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    text-align: center;
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+}
+
+    .fdl-login-card h1 {
+        font-size: 1.9rem;
+        margin-bottom: 25px;
+    }
+
+    /* ====================
+   INPUTS
+==================== */
+    .fdl-login-card input[type="text"],
+    .fdl-login-card input[type="password"] {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.12);
+        color: #ffffff;
+        font-size: 1rem;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .fdl-login-card input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+
+    .fdl-login-card input:focus {
+        outline: none;
+        box-shadow: 0 0 15px rgba(31,111,99,0.6);
+    }
+
+    /* ====================
+   BUTTON
+==================== */
+    .fdl-login-card button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: linear-gradient(135deg, #1f6f63, #3b9a8f);
+        color: #ffffff;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+    }
+
+        .fdl-login-card button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+        }
+
+    /* ====================
+   ERROR MESSAGE
+==================== */
+    .fdl-login-card .error-msg {
+        color: #dc3545;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+/* ====================
+   ANIMATIONS
+==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================
+   RESPONSIVE
+==================== */
+@media (max-width: 480px) {
+    .fdl-login-card {
+        padding: 30px 20px;
+    }
+
+        .fdl-login-card h1 {
+            font-size: 1.5rem;
+        }
+}

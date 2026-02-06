@@ -2,51 +2,46 @@
 @model ged_fdl_razor.Pages.Commune.DossierModel
 @{
     ViewData["Title"] = "Dossier de financement";
+    Layout = "_PublicLayout";
 }
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="~/css/Dossier.css" />
-    <title>@ViewData["Title"]</title>
-</head>
+@section Styles {
+    <link rel="stylesheet" href="~/css/Dossier.css" asp-append-version="true" />
+}
 
-<h1>Dossier de financement de @(Model.Commune?.Nom ?? "Nom inconnu")</h1>
+<div class="fdl-container">
 
-<form method="post" asp-page-handler="Logout" class="text-end mb-3">
-    <button type="submit" class="btn btn-danger">Se déconnecter</button>
-</form>
+    <h1 class="fdl-title">Dossier de financement de @(Model.Commune?.Nom ?? "Nom inconnu")</h1>
 
-<p><strong>Email :</strong> @(Model.Commune?.Email ?? "Non renseigné")</p>
-<p><strong>District :</strong> @(Model.Commune?.District ?? "Non renseigné")</p>
-<p><strong>Région :</strong> @(Model.Commune?.Region ?? "Non renseigné")</p>
-<p><strong>Date de création :</strong> @(Model.Commune?.DateCreation.ToString("dd/MM/yyyy") ?? "Non renseignée")</p>
+    <form method="post" asp-page-handler="Logout" class="text-end mb-3">
+        <button type="submit" class="fdl-btn fdl-btn-danger">Se déconnecter</button>
+    </form>
 
-<hr />
+    <div class="fdl-info">
+        <p><strong>Email :</strong> @(Model.Commune?.Email ?? "Non renseigné")</p>
+        <p><strong>District :</strong> @(Model.Commune?.District ?? "Non renseigné")</p>
+        <p><strong>Région :</strong> @(Model.Commune?.Region ?? "Non renseigné")</p>
+        <p><strong>Date de création :</strong> @(Model.Commune?.DateCreation.ToString("dd/MM/yyyy") ?? "Non renseignée")</p>
+    </div>
 
-<h2>Dossiers soumis</h2>
+    <hr />
 
-@if (Model.Commune?.Dossiers?.Any() == true)
-{
-    <div class="accordion" id="dossiersAccordion">
-        @foreach (var dossier in Model.Commune.Dossiers)
-        {
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading@dossier.Id">
-                    <p class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                       data-bs-target="#collapse@dossier.Id" aria-expanded="false"
-                       aria-controls="collapse@dossier.Id">
+    <h2 class="fdl-subtitle">Dossiers soumis</h2>
+
+    @if (Model.Commune?.Dossiers?.Any() == true)
+    {
+        <div class="fdl-accordion">
+            @foreach (var dossier in Model.Commune.Dossiers)
+            {
+                <div class="fdl-card">
+                    <div class="fdl-card-header" onclick="this.nextElementSibling.classList.toggle('open')">
                         @dossier.Titre (@dossier.DateSoumission?.ToString("dd/MM/yyyy"))
-                    </p>
-                </h2>
-
-                <div id="collapse@dossier.Id" class="accordion-collapse collapse"
-                     aria-labelledby="heading@dossier.Id" data-bs-parent="#dossiersAccordion">
-                    <div class="accordion-body">
+                    </div>
+                    <div class="fdl-card-body">
                         <h4>Documents</h4>
-
                         @if (dossier.Documents?.Any() == true)
                         {
-                            <div class="table-responsive">
-                                <table class="table table-striped">
+                            <div class="fdl-table-wrapper">
+                                <table class="fdl-table">
                                     <thead>
                                         <tr>
                                             <th>Nom</th>
@@ -62,35 +57,29 @@
                                         @foreach (var doc in dossier.Documents)
                                         {
                                             <tr>
-                                                <td data-label="Nom">@doc.Nom</td>
-                                                <td data-label="Type">@doc.Type</td>
-                                                <td data-label="ContentType">@doc.ContentType</td>
-                                                <td data-label="Taille">@doc.Taille</td>
-                                                <td data-label="Fichier">
-                                                    <a asp-page-handler="Download" asp-route-id="@doc.DocumentID" class="btn btn-sm btn-success">Télécharger</a>
-                                                    <a asp-page-handler="Open" asp-route-id="@doc.DocumentID" class="btn btn-sm btn-primary">Ouvrir</a>
+                                                <td>@doc.Nom</td>
+                                                <td>@doc.Type</td>
+                                                <td>@doc.ContentType</td>
+                                                <td>@doc.Taille</td>
+                                                <td>
+                                                    <a asp-page-handler="Download" asp-route-id="@doc.DocumentID" class="fdl-btn fdl-btn-success">Télécharger</a>
+                                                    <a asp-page-handler="Open" asp-route-id="@doc.DocumentID" class="fdl-btn fdl-btn-primary">Ouvrir</a>
                                                 </td>
-                                                <td data-label="Date Upload">@doc.DateUpload.ToString("dd/MM/yyyy HH:mm")</td>
-                                                <td data-label="Actions">
-                                                    <a asp-page="/Commune/Dossiers/Documents/Replace" asp-route-documentId="@doc.DocumentID" class="btn btn-sm btn-warning">Remplacer</a>
+                                                <td>@doc.DateUpload.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>
+                                                    <a asp-page="/Commune/Dossiers/Documents/Replace" asp-route-documentId="@doc.DocumentID" class="fdl-btn fdl-btn-warning">Remplacer</a>
                                                 </td>
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
                             </div>
-
-                            <br />
-                            <a class="btn btn-success mb-2" asp-page="/Commune/Dossiers/Documents/Create" asp-route-dossierId="@dossier.Id">
-                                + Ajouter un document
-                            </a>
+                            <a class="fdl-btn fdl-btn-success mt-2" asp-page="/Commune/Dossiers/Documents/Create" asp-route-dossierId="@dossier.Id">+ Ajouter un document</a>
                         }
                         else
                         {
                             <p>Aucun document soumis pour ce dossier.</p>
-                            <a class="btn btn-success" asp-page="/Commune/Dossiers/Documents/Create" asp-route-dossierId="@dossier.Id">
-                                Ajouter un nouveau document
-                            </a>
+                            <a class="fdl-btn fdl-btn-success" asp-page="/Commune/Dossiers/Documents/Create" asp-route-dossierId="@dossier.Id">Ajouter un nouveau document</a>
                         }
 
                         @if (dossier.Remarques?.Any() == true)
@@ -105,14 +94,22 @@
                         }
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-}
-else
-{
-    <p>Aucun dossier soumis pour cette commune.</p>
-    <a class="btn btn-success" asp-page="/Commune/Dossiers/Create" asp-route-CommuneId="@(Model.Commune?.CommuneID ?? 0)">
-        Créer un nouveau dossier
-    </a>
-}
+            }
+        </div>
+    }
+    else
+    {
+        <p>Aucun dossier soumis pour cette commune.</p>
+        <a class="fdl-btn fdl-btn-success" asp-page="/Commune/Dossiers/Create" asp-route-CommuneId="@(Model.Commune?.CommuneID ?? 0)">Créer un nouveau dossier</a>
+    }
+</div>
+
+<script>
+    // Petites animations accordion
+    document.querySelectorAll('.fdl-card-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const body = header.nextElementSibling;
+            body.classList.toggle('open');
+        });
+    });
+</script>

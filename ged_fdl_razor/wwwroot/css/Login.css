@@ -1,89 +1,134 @@
 ﻿/* ============================
-   LOGIN – Full Responsive XL++
-   ============================ */
+   RESET & BASE
+============================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html {
-    font-size: 22px; /* 1rem = 18px au lieu de 16px par défaut */
+    font-size: 22px;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
+    background: linear-gradient(135deg, #1f6f63, #3b9a8f);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #fff;
     padding: 10px;
 }
 
+/* ============================
+   OVERLAY + GLASS EFFECT
+============================ */
 .login-card {
-    background-color: #ffffff;
-    padding: 80px 70px; /* plus grand padding */
-    border-radius: 15px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    position: relative;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 80px 70px;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
     width: 100%;
-    max-width: 900px;
+    max-width: 600px;
     text-align: center;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1s ease forwards;
 }
 
+    /* hover effect */
     .login-card:hover {
-        transform: translateY(-8px);
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.45);
     }
 
+/* ============================
+   TITRE
+============================ */
 h1 {
-    color: #0d6efd;
-    font-size: 3.2rem; /* XXL */
+    font-size: 3.2rem;
     font-weight: 700;
     margin-bottom: 40px;
+    color: #ffffff;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.35);
+    animation: fadeInDown 1s ease forwards;
+    opacity: 0;
 }
 
+/* ============================
+   FORM
+============================ */
 form {
     display: flex;
     flex-direction: column;
     gap: 28px;
+    align-items: center;
 }
 
 label {
     font-weight: 600;
     text-align: left;
-    font-size: 1.8rem; /* énorme */
+    font-size: 1.8rem;
+    color: #fff;
 }
 
 input.form-control {
     padding: 22px 18px;
-    border-radius: 10px;
-    border: 1px solid #ced4da;
-    font-size: 1.8rem; /* très grand */
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.35);
+    font-size: 1.8rem;
+    background: rgba(255,255,255,0.05);
+    color: #fff;
     transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(5px);
 }
 
-    input.form-control:focus {
-        border-color: #0d6efd;
-        box-shadow: 0 0 12px rgba(13,110,253,0.4);
-        outline: none;
+    input.form-control::placeholder {
+        color: rgba(255,255,255,0.6);
     }
 
+    input.form-control:focus {
+        border-color: #ffffff;
+        box-shadow: 0 0 18px rgba(255,255,255,0.5);
+        outline: none;
+        background: rgba(255,255,255,0.1);
+    }
+
+/* ============================
+   BUTTON
+============================ */
 button.btn-primary {
     padding: 22px;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: 600;
-    background-color: #0d6efd;
+    background: linear-gradient(135deg, #1f6f63, #3b9a8f);
     border: none;
     color: #fff;
     cursor: pointer;
     font-size: 1.8rem;
     transition: all 0.3s ease-in-out;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }
 
     button.btn-primary:hover {
-        background-color: #0b5ed7;
-        transform: translateY(-3px);
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 18px 45px rgba(0,0,0,0.35);
     }
 
+/* ============================
+   ALERTS
+============================ */
 .alert {
     padding: 18px 22px;
-    border-radius: 10px;
+    border-radius: 12px;
     margin-bottom: 20px;
     font-weight: 500;
     text-align: center;
@@ -91,7 +136,7 @@ button.btn-primary {
 }
 
 .alert-danger {
-    background-color: #f8d7da;
+    background-color: rgba(248, 215, 218, 0.8);
     color: #842029;
     border: 1px solid #f5c2c7;
 }
@@ -103,17 +148,57 @@ span.text-danger {
 
 .password-help {
     font-size: 1.7rem;
-    color: grey !important;
+    color: rgba(255,255,255,0.7) !important;
     font-style: italic;
     margin-top: 20px;
 }
 
 /* ============================
-   TABLETTES (≤ 992px)
-   ============================ */
+   ANIMATIONS
+============================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ============================
+   RESPONSIVE TABLET
+============================ */
 @media (max-width: 992px) {
     .login-card {
-        max-width: 90%;
         padding: 70px 50px;
     }
 
@@ -125,8 +210,7 @@ span.text-danger {
         font-size: 1.6rem;
     }
 
-    input.form-control,
-    button.btn-primary {
+    input.form-control, button.btn-primary {
         font-size: 1.6rem;
         padding: 20px 16px;
     }
@@ -137,14 +221,11 @@ span.text-danger {
 }
 
 /* ============================
-   MOBILES (≤ 768px)
-   ============================ */
+   RESPONSIVE MOBILE
+============================ */
 @media (max-width: 768px) {
     .login-card {
-        max-width: 100%;
-        width: 100%;
-        padding: 75px 40px;
-        margin: 0 auto;
+        padding: 60px 35px;
         border-radius: 12px;
     }
 
@@ -156,23 +237,22 @@ span.text-danger {
         font-size: 1.5rem;
     }
 
-    input.form-control,
-    button.btn-primary {
-        font-size: 1.6rem;
-        padding: 20px 16px;
+    input.form-control, button.btn-primary {
+        font-size: 1.5rem;
+        padding: 18px 14px;
     }
 
     .password-help {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 }
 
 /* ============================
-   PETITS MOBILES (≤ 480px)
-   ============================ */
+   PETITS MOBILES
+============================ */
 @media (max-width: 480px) {
     .login-card {
-        padding: 70px 25px;
+        padding: 50px 20px;
         border-radius: 10px;
     }
 
@@ -184,13 +264,12 @@ span.text-danger {
         font-size: 1.4rem;
     }
 
-    input.form-control,
-    button.btn-primary {
-        font-size: 1.5rem;
-        padding: 18px 14px;
+    input.form-control, button.btn-primary {
+        font-size: 1.4rem;
+        padding: 16px 12px;
     }
 
     .password-help {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 }

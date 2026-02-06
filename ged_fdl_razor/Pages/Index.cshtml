@@ -1,15 +1,40 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Accueil";
+    Layout = "_PublicLayout";
 }
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="~/css/Accueil.css" />
-    <title>GED FDL Accueil</title>
-</head>
+@section Styles {
+    <link rel="stylesheet" href="~/css/Accueil.css" asp-append-version="true" />
+}
+
 <body class="homePage">
-    <div class="centered">
-        <a class="homePage" asp-page="ListeDocumentsRequis">Voir la liste des documents à remplir</a>
+    <div class="home-wrapper">
+        <div class="overlay"></div>
+
+        <main class="hero">
+            <h1>GED – Fonds de Développement Local</h1>
+            <p class="subtitle">
+                Plateforme numérique de gestion et de suivi des documents communaux
+            </p>
+
+            <a class="cta-btn" asp-page="ListeDocumentsRequis">
+                📂 Voir la liste des documents requis
+            </a>
+        </main>
     </div>
 </body>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const hero = document.querySelector(".hero");
+            if (hero) {
+                hero.classList.remove("animate"); // reset
+                void hero.offsetWidth;             // force reflow
+                hero.classList.add("animate");     // relance animation
+            }
+        });
+    </script>
+}

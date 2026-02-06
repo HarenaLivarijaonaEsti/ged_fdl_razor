@@ -3,20 +3,24 @@
 @{
     ViewData["Title"] = "Connexion Admin";
 }
+<link href="~/css/LoginAdmin.css" rel="stylesheet" />
 
-<h1>Vous devez vous authentifier</h1>
-<br />
-
-@if (Model.CompteInvalide)
-{
-    <div style="color:red; font-weight:bold;">
-        Erreur : ce compte est invalide
-    </div>
+<div class="fdl-login-card">
+    <h1>Vous devez vous authentifier</h1>
     <br />
-}
 
-<form method="post">
-    <input type="text" name="username" placeholder="Login" /><br /><br />
-    <input type="password" name="password" placeholder="Mot de passe" /><br /><br />
-    <button type="submit">Se connecter</button>
-</form>
+    @if (Model.CompteInvalide)
+    {
+        <div class="error-msg">
+            Erreur : ce compte est invalide
+        </div>
+        <br />
+    }
+
+    <form method="post">
+        <input type="text" name="username" placeholder="Login" />
+        <input type="password" name="password" placeholder="Mot de passe" />
+        <button type="submit">Se connecter</button>
+    </form>
+</div>
+

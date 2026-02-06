@@ -2,63 +2,60 @@
 @model ged_fdl_razor.Pages.ListeDocumentsRequisModel
 @{
     ViewData["Title"] = "Documents requis";
+    Layout = "_PublicLayout";
 }
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="~/css/liste-documents-fdl.css" />
-   
-</head>
-
+@section Styles {
+    <link rel="stylesheet" href="~/css/liste-documents-fdl.css" asp-append-version="true" />
+}
 
 <div class="fdl-container">
 
-    <div class="fdl-title">
+    <header class="fdl-header">
         <h2>Dossier de Demande de Financement</h2>
         <p>Fonds de Développement Local (FDL)</p>
 
-        <!-- Bouton Se connecter -->
-        <div class="mt-3 text-center">
-            <a asp-page="/Commune/Login" class="btn btn-primary btn-lg">
-                Se connecter pour voir votre dossier de financement
-            </a>
-        </div>
+        <a asp-page="/Commune/Login" class="fdl-login-btn">
+            🔐 Se connecter pour voir votre dossier
+        </a>
+    </header>
 
-    </div>
-
-    <div class="fdl-info">
+    <section class="fdl-info">
         Après la communication effectuée par le FDL, la commune doit transmettre
         un dossier complet de demande de financement comprenant les documents suivants :
-    </div>
+    </section>
 
-    <div class="fdl-card">
-        <h4>Dossier Administratif</h4>
-        <ul>
-            <li>Copie conforme du <strong>Compte administratif de l’année N-1</strong> avec avis favorable du Chef District</li>
-            <li>Copie conforme du <strong>Budget Primitif / Budget Programme de l’année N</strong> avec extrait de délibération du Conseil Communal</li>
-            <li>Copie conforme de l’<strong>Arrêté de nomination du Trésorier Communal</strong> (Commune rurale de 2ᵉ catégorie)</li>
-        </ul>
-    </div>
+    <section class="fdl-grid">
 
-    <div class="fdl-card">
-        <h4>Dossier Technique</h4>
-        <ul>
-            <li><strong>Fiche d’Identification du Projet (FIP)</strong> dûment remplie</li>
-            <li><strong>Croquis / Plan</strong> de l’infrastructure</li>
-            <li><strong>Devis quantitatif</strong> du coût de l’infrastructure</li>
-        </ul>
-    </div>
+        <div class="fdl-card">
+            <h4>Dossier Administratif</h4>
+            <ul>
+                <li>Compte administratif N-1 avec avis favorable</li>
+                <li>Budget Primitif / Programme N avec délibération</li>
+                <li>Arrêté de nomination du Trésorier Communal</li>
+            </ul>
+        </div>
 
-    <div class="fdl-card">
-        <h4>Dossier Complémentaire</h4>
-        <ul>
-            <li>Extrait PDL II</li>
-            <li>Délibération du Conseil Communal</li>
-            <li>Situation foncière</li>
-            <li>Autorisation STD</li>
-            <li>Rapport final du projet antérieur financé par le FDL</li>
-        </ul>
-    </div>
+        <div class="fdl-card">
+            <h4>Dossier Technique</h4>
+            <ul>
+                <li>Fiche d’Identification du Projet (FIP)</li>
+                <li>Croquis / Plan de l’infrastructure</li>
+                <li>Devis quantitatif détaillé</li>
+            </ul>
+        </div>
+
+        <div class="fdl-card">
+            <h4>Dossier Complémentaire</h4>
+            <ul>
+                <li>Extrait PDL II</li>
+                <li>Délibération du Conseil Communal</li>
+                <li>Situation foncière</li>
+                <li>Autorisation STD</li>
+                <li>Rapport final projet antérieur</li>
+            </ul>
+        </div>
+
+    </section>
 
 </div>

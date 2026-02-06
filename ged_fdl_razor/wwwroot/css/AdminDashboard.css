@@ -1,0 +1,107 @@
+﻿/* ====================
+   RESET & BASE
+==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('../images/fdl.jpg') center / cover no-repeat;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+/* ====================
+   OVERLAY
+==================== */
+.fdl-container::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55));
+    z-index: 0;
+}
+
+/* ====================
+   CONTAINER
+==================== */
+.fdl-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 30px;
+    position: relative;
+    z-index: 1;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+}
+
+/* ====================
+   TITLES
+==================== */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: rgba(255,255,255,0.85);
+}
+
+/* ====================
+   LIST GROUP / LINKS
+==================== */
+.list-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.list-group-item {
+    background: rgba(255,255,255,0.12);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+@media (hover: hover) {
+    .list-group-item:hover {
+        transform: translateY(-4px) scale(1.02);
+        background: rgba(31,111,99,0.7);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+    }
+}
+
+/* ====================
+   ANIMATIONS
+==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

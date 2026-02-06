@@ -1,91 +1,152 @@
-﻿/* -----------------------------
-   Page d'accueil avec image fond – NORMAL
------------------------------ */
+﻿/* ============================
+   RESET & BASE
+============================ */
 
-body.homePage {
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body.homePage {
     min-height: 100vh;
-    width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: url('../images/fdl.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: url('../images/fdl.jpg') center / cover no-repeat;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    position: relative;
+    color: #ffffff;
 }
 
-/* Conteneur du lien */
-.centered {
-    margin-top: 18vh;
+/* ============================
+   OVERLAY (contraste lisibilité)
+============================ */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient( rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55) );
+    z-index: 1;
+}
+
+/* ============================
+   HERO CONTAINER (glass)
+============================ */
+.hero {
+    position: relative;
+    z-index: 2;
     text-align: center;
-    padding: 0 1rem;
+    padding: 3rem 3.5rem;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 18px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transform: translateY(25px);
 }
 
-    /* Lien bouton */
-    .centered a.homePage {
-        display: inline-block;
-        text-decoration: none;
-        background-color: rgba(59, 79, 74, 0.85);
-        color: #fff;
-        padding: 0.8rem 2rem; /* taille confortable */
-        font-size: 1.2rem; /* taille normale */
-        font-weight: bold;
-        border-radius: 10px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
+    .hero.animate {
+        animation: fadeInUp 0.9s ease forwards;
     }
 
-/* Effet hover (desktop uniquement) */
+
+    /* ============================
+   TITRES
+============================ */
+    .hero h1 {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+/* ============================
+   BOUTON PRINCIPAL
+============================ */
+.cta-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: linear-gradient(135deg, #1f6f63, #3b9a8f);
+    color: #ffffff;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
 @media (hover: hover) {
-    .centered a.homePage:hover {
-        background-color: rgba(59, 79, 74, 0.95);
-        transform: scale(1.03); /* petit effet */
+    .cta-btn:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
     }
 }
 
-/* -----------------------------
-   TABLETTES (<= 1024px)
------------------------------ */
+/* ============================
+   ANIMATION
+============================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================
+   TABLETTES
+============================ */
 @media (max-width: 1024px) {
-    .centered {
-        margin-top: 20vh;
+    .hero {
+        padding: 2.5rem;
     }
 
-        .centered a.homePage {
-            font-size: 1.1rem;
-            padding: 0.7rem 1.5rem;
+        .hero h1 {
+            font-size: 1.9rem;
         }
 }
 
-/* -----------------------------
-   MOBILES (<= 768px)
------------------------------ */
+/* ============================
+   MOBILES
+============================ */
 @media (max-width: 768px) {
-    body.homePage {
-        align-items: center;
+    .hero {
+        padding: 2rem 1.8rem;
+        margin: 0 1rem;
     }
 
-    .centered {
-        margin-top: 5vh;
-    }
-
-        .centered a.homePage {
-            width: 100%;
-            max-width: 300px;
-            font-size: 1rem;
-            padding: 0.7rem 1.2rem;
-            border-radius: 10px;
+        .hero h1 {
+            font-size: 1.6rem;
         }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .cta-btn {
+        width: 100%;
+        max-width: 320px;
+    }
 }
 
-/* -----------------------------
-   PETITS MOBILES (<= 480px)
------------------------------ */
+/* ============================
+   PETITS MOBILES
+============================ */
 @media (max-width: 480px) {
-    .centered a.homePage {
-        font-size: 0.95rem;
-        padding: 0.6rem 1rem;
+    .hero h1 {
+        font-size: 1.4rem;
     }
 }

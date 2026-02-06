@@ -4,8 +4,11 @@
 
 @{
     ViewData["Title"] = "Ajouter un document";
+    Layout = "_PublicLayout";
 }
-<link rel="stylesheet" href="~/css/DossierDocument.css" />
+@section Styles {
+    <link rel="stylesheet" href="~/css/CreateDoc.css" asp-append-version="true" />
+}
 <h1>Ajouter un document au dossier</h1>
 
 @if (!Model.TypesDisponibles.Any())
@@ -47,7 +50,7 @@ else
         </button>
     </form>
 }
-
+<br /><br />
 <a asp-page="/Commune/Dossier"
    asp-route-id="@Model.CommuneId"
    class="btn btn-secondary mt-3">

@@ -1,250 +1,230 @@
-﻿/* ============================
-   Dossier – Styles de base
-   ============================ */
+﻿/* ====================
+   Reset & Base
+==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    background: #f0f2f5; /* doux gris clair */
     color: #212529;
-    margin: 0;
+    min-height: 100vh;
     padding: 20px;
 }
 
-h1 {
-    font-size: 1.8rem;
+/* ====================
+   Container & Titles
+==================== */
+.fdl-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+}
+
+.fdl-title {
+    text-align: center;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 20px;
-    text-align: center;
+    color: #0d6efd; /* bleu FDL doux */
 }
 
-h2 {
-    font-size: 1.4rem;
+.fdl-subtitle {
+    font-size: 1.5rem;
     font-weight: 600;
     margin-top: 30px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    color: #198754; /* vert FDL */
 }
 
-h4, h5 {
-    font-size: 1.2rem;
-    font-weight: 500;
+/* ====================
+   Info Box
+==================== */
+.fdl-info p {
     margin-bottom: 10px;
-}
-
-p {
     font-size: 1rem;
-    margin-bottom: 8px;
 }
 
-.text-end {
-    text-align: right;
-    margin-bottom: 15px;
-}
-
-.btn {
-    font-size: 0.9rem;
-    padding: 6px 12px;
-    border-radius: 6px;
+/* ====================
+   Buttons
+==================== */
+.fdl-btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    cursor: pointer;
     margin: 2px 0;
 }
 
-/* ============================
-   Accordion
-   ============================ */
-.accordion-button {
-    font-size: 1rem;
-    padding: 10px 12px;
-    cursor: pointer;
-}
-
-.accordion-body {
-    padding: 12px;
-    font-size: 0.95rem;
-}
-
-/* ============================
-   Table – responsive
-   ============================ */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 15px;
-    min-width: 600px;
-}
-
-    .table th, .table td {
-        padding: 8px 10px;
-        font-size: 0.95rem;
-        border: 1px solid #dee2e6;
-        text-align: left;
-        white-space: nowrap;
+    .fdl-btn:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
     }
 
-    .table th {
-        background-color: #e9ecef;
-    }
-
-/* ============================
-   Couleurs boutons
-   ============================ */
-.btn-success {
-    background-color: #198754;
+.fdl-btn-success {
+    background: linear-gradient(135deg,#1f6f63,#3b9a8f);
     color: #fff;
     border: none;
 }
 
-    .btn-success:hover {
-        background-color: #157347;
-    }
-
-.btn-primary {
-    background-color: #0d6efd;
+.fdl-btn-primary {
+    background: linear-gradient(135deg,#0d6efd,#3b82f6);
     color: #fff;
     border: none;
 }
 
-    .btn-primary:hover {
-        background-color: #0b5ed7;
-    }
-
-.btn-warning {
-    background-color: #ffc107;
+.fdl-btn-warning {
+    background: linear-gradient(135deg,#ffc107,#ffca2c);
     color: #212529;
     border: none;
 }
 
-    .btn-warning:hover {
-        background-color: #e0a800;
+.fdl-btn-danger {
+    background: linear-gradient(135deg,#dc3545,#e4606d);
+    color: #fff;
+    border: none;
+}
+
+/* ====================
+   Cards / Accordion
+==================== */
+.fdl-card {
+    background: #ffffffcc; /* blanc semi-opaque pour lisibilité */
+    border-radius: 14px;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.fdl-card-header {
+    padding: 15px 20px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    background: #e9ecef;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    transition: background 0.3s ease;
+}
+
+    .fdl-card-header:hover {
+        background: #dee2e6;
     }
 
-/* ============================
-   Media Queries – Mobiles
-   ============================ */
-@media (max-width: 768px) {
-    body {
+.fdl-card-body {
+    padding: 15px 20px;
+    display: block; /* ouvert par défaut */
+    font-size: 0.95rem;
+}
+
+/* ====================
+   Table
+==================== */
+.fdl-table-wrapper {
+    overflow-x: auto;
+}
+
+.fdl-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+    .fdl-table th, .fdl-table td {
+        border: 1px solid rgba(0,0,0,0.1);
         padding: 10px;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    h2 {
-        font-size: 1.2rem;
-    }
-
-    h4, h5 {
-        font-size: 1rem;
-    }
-
-    p {
-        font-size: 0.9rem;
-    }
-
-    .btn {
-        font-size: 0.85rem;
-        padding: 5px 10px;
-        width: 100%;
-        display: block;
-    }
-
-    .accordion-button {
+        text-align: left;
         font-size: 0.95rem;
-        padding: 8px 10px;
     }
 
-    .accordion-body {
-        padding: 10px;
-        font-size: 0.9rem;
+    .fdl-table th {
+        background: #f8f9fa;
+        font-weight: 600;
     }
 
-    .table th, .table td {
+    .fdl-table td a.fdl-btn {
+        padding: 0.4rem 0.8rem;
         font-size: 0.85rem;
-        padding: 6px 8px;
     }
 
-    .table-responsive {
-        overflow-x: auto;
+/* ====================
+   Animations
+==================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* ============================
-   Petits Mobiles (≤ 480px)
-   ============================ */
-@media (max-width: 480px) {
-    h1 {
+/* ====================
+   Responsive
+==================== */
+@media (max-width: 768px) {
+    .fdl-title {
+        font-size: 1.7rem;
+    }
+
+    .fdl-subtitle {
         font-size: 1.3rem;
     }
 
-    h2 {
+    .fdl-card-header {
         font-size: 1rem;
     }
 
-    h4, h5 {
+    .fdl-card-body {
         font-size: 0.9rem;
     }
 
-    p {
+    .fdl-btn {
+        font-size: 0.9rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .fdl-table th, .fdl-table td {
         font-size: 0.85rem;
-    }
-
-    .btn {
-        font-size: 0.8rem;
-        padding: 4px 8px;
-    }
-
-    .accordion-button {
-        font-size: 0.85rem;
-        padding: 6px 8px;
-    }
-
-    .accordion-body {
-        font-size: 0.8rem;
         padding: 8px;
     }
+}
 
-    /* Table – mobile vertical */
-    .table {
-        border: 0;
-        min-width: 100%;
+@media (max-width: 480px) {
+    .fdl-title {
+        font-size: 1.5rem;
     }
 
-        .table thead {
-            display: none;
-        }
+    .fdl-subtitle {
+        font-size: 1.2rem;
+    }
 
-        .table tr {
-            display: block;
-            margin-bottom: 15px;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 10px;
-            background-color: #fff;
-        }
+    .fdl-card-header {
+        font-size: 0.95rem;
+    }
 
-        .table td {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 10px;
-            font-size: 0.85rem;
-            white-space: normal;
-            border: none;
-            border-bottom: 1px solid #dee2e6;
-        }
+    .fdl-card-body {
+        font-size: 0.85rem;
+    }
 
-            .table td:last-child {
-                border-bottom: 0;
-            }
+    .fdl-btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
 
-            .table td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                margin-right: 10px;
-                flex-shrink: 0;
-                text-align: left;
-            }
+    .fdl-table th, .fdl-table td {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
 }
