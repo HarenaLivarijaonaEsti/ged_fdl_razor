@@ -13,12 +13,14 @@ namespace ged_fdl_razor.Pages.Admin
 
         public IndexModel(IConfiguration configuration) => _configuration = configuration;
 
-        public void OnGet()
+        // OnGet doit retourner IActionResult pour gérer les redirections correctement
+        public IActionResult OnGet()
         {
             if (User.Identity?.IsAuthenticated == true)
             {
-                Response.Redirect("/Admin/Nav");
+                return RedirectToPage("/Admin/Nav/Index"); // redirection propre
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string username, string password, string? returnUrl)
@@ -44,10 +46,11 @@ namespace ged_fdl_razor.Pages.Admin
             return Page();
         }
 
+        // Déconnexion
         public async Task<IActionResult> OnPostLogoutAsync()
         {
             await HttpContext.SignOutAsync("AdminCookie");
-            return Redirect("/Admin/Index");
+            return RedirectToPage("/Admin/Index"); // redirection vers la page de login
         }
     }
 }
