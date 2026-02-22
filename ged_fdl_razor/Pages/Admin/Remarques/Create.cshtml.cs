@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,9 +24,18 @@ namespace ged_fdl_razor.Pages.Admin.Remarques
         [BindProperty]
         public Remarque Remarque { get; set; } = new();
 
-        public IActionResult OnGet()
+        // ===============================
+        // OnGet modifié pour recevoir communeId
+        // ===============================
+        public IActionResult OnGet(int? communeId)
         {
-            ChargerListes();
+            ChargerCommunes();
+
+            if (communeId.HasValue)
+            {
+                Remarque.CommuneId = communeId.Value;
+            }
+
             return Page();
         }
 
@@ -33,14 +43,12 @@ namespace ged_fdl_razor.Pages.Admin.Remarques
         {
             if (!ModelState.IsValid)
             {
-                // 🔁 Important : recharger les listes en cas d’erreur
-                ChargerListes();
+                ChargerCommunes();
                 return Page();
             }
 
-            // ✅ Date définie automatiquement au moment du Create
+            // Date automatique
             Remarque.DateCreation = DateTime.Now;
-            // 👉 remplace par DateTime.Now si tu veux l’heure locale
 
             _context.Remarques.Add(Remarque);
             await _context.SaveChangesAsync();
@@ -48,8 +56,28 @@ namespace ged_fdl_razor.Pages.Admin.Remarques
             return RedirectToPage("./Index");
         }
 
-        // 🔧 Méthode utilitaire pour éviter la duplication
-        private void ChargerListes()
+        // ===============================
+        // AJAX : Charger dossiers par commune
+        // ===============================
+        public async Task<JsonResult> OnGetDossiersByCommuneAsync(int communeId)
+        {
+            var dossiers = await _context.DossiersFinancement
+                .Where(d => d.CommuneId == communeId)
+                .Select(d => new
+                {
+                    id = d.Id,
+                    titre = d.Titre
+                })
+                .OrderBy(d => d.titre)
+                .ToListAsync();
+
+            return new JsonResult(dossiers);
+        }
+
+        // ===============================
+        // Charger uniquement les communes
+        // ===============================
+        private void ChargerCommunes()
         {
             ViewData["CommuneId"] = new SelectList(
                 _context.Communes
@@ -62,9 +90,6 @@ namespace ged_fdl_razor.Pages.Admin.Remarques
                 "CommuneID",
                 "Libelle"
             );
-
-            ViewData["DossierFinancementId"] =
-                new SelectList(_context.DossiersFinancement, "Id", "Titre");
         }
     }
 }

@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Dossier de financement";
     Layout = "_PublicLayout";
+    var aDejaUnDossierCetteAnnee = Model.Commune?.Dossiers?
+        .Any(d => d.DateCreation.Year == DateTime.Now.Year) == true;
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/Dossier.css" asp-append-version="true" />
@@ -96,16 +98,32 @@
                 </div>
             }
         </div>
+
+        @if (!aDejaUnDossierCetteAnnee)
+        {
+            <a class="fdl-btn fdl-btn-success mt-3"
+               asp-page="/Commune/Dossiers/Create"
+               asp-route-CommuneId="@(Model.Commune?.CommuneID ?? 0)">
+                + Créer un dossier pour @DateTime.Now.Year
+            </a>
+        }
+        else
+        {
+            <p class="text-muted mt-3">Un dossier a déjà été créé pour l'année @DateTime.Now.Year.</p>
+        }
     }
     else
     {
         <p>Aucun dossier soumis pour cette commune.</p>
-        <a class="fdl-btn fdl-btn-success" asp-page="/Commune/Dossiers/Create" asp-route-CommuneId="@(Model.Commune?.CommuneID ?? 0)">Créer un nouveau dossier</a>
+        <a class="fdl-btn fdl-btn-success"
+           asp-page="/Commune/Dossiers/Create"
+           asp-route-CommuneId="@(Model.Commune?.CommuneID ?? 0)">
+            Créer un nouveau dossier
+        </a>
     }
 </div>
 
 <script>
-    // Petites animations accordion
     document.querySelectorAll('.fdl-card-header').forEach(header => {
         header.addEventListener('click', () => {
             const body = header.nextElementSibling;
