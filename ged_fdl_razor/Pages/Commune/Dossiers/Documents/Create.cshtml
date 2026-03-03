@@ -33,7 +33,7 @@ else
                 <option value="">-- Sélectionner le type --</option>
                 @foreach (var type in Model.TypesDisponibles)
                 {
-                    <option value="@type">@type</option>
+                    <option value="@type">@type.GetDisplayName()</option>
                 }
             </select>
             <span asp-validation-for="Document.Type" class="text-danger"></span>

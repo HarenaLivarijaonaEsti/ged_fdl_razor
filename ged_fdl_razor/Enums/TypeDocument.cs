@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace ged_fdl_razor.Enums
 {
@@ -48,5 +49,19 @@ namespace ged_fdl_razor.Enums
 
         [Display(Name = "Rapport final du projet antérieur financé par le FDL")]
         RapportFinalProjetAnterieur
+    }
+    // ✅ Méthode d'extension pour l'affichage DisplayName
+    public static class TypeDocumentExtensions
+    {
+        public static string GetDisplayName(this TypeDocument doc)
+        {
+            return doc
+                .GetType()
+                .GetMember(doc.ToString())
+                .First()
+                .GetCustomAttribute<DisplayAttribute>()?
+                .GetName()
+                ?? doc.ToString();
+        }
     }
 }

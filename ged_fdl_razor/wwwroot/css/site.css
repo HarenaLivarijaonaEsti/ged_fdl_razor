@@ -6,6 +6,14 @@ html {
     position: relative;
     min-height: 100%;
 }
+table a {
+    color: white;
+    text-decoration: none;
+}
+
+    table a:hover {
+        color: darkseagreen;
+    }
 
 @media (max-width: 1200px) {
     html {
