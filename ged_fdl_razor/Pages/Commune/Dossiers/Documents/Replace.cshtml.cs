@@ -60,6 +60,12 @@ namespace ged_fdl_razor.Pages.Commune.Dossiers.Documents
             document.ContentType = UploadFile.ContentType;
             document.DateUpload = DateTime.UtcNow;
 
+            // Mise à jour du flag
+            var commune = await _context.Communes
+                .FirstOrDefaultAsync(c => c.CommuneID == document.DossierFinancement!.CommuneId);
+            if (commune != null)
+                commune.HasNewDocuments = true;
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage(

@@ -1,5 +1,6 @@
 ﻿@page
 @model ged_fdl_razor.Pages.Admin.Communes.IndexModel
+@using ged_fdl_razor.Enums
 @{
     ViewData["Title"] = "Liste des Communes";
 }
@@ -28,11 +29,42 @@
         <tbody>
             @foreach (var item in Model.Commune)
             {
-                <tr>
+                <tr class="@(item.HasNewDocuments ? "highlight-commune" : "")">
                     <td>
                         <a asp-page="/Admin/Dossiers/Index" asp-route-communeId="@item.CommuneID">
                             @item.Nom
                         </a>
+
+                        @{
+                            var dernierDossier = item.Dossiers
+                            .OrderByDescending(d => d.Id)
+                            .FirstOrDefault();
+                            var statut = dernierDossier?.Statut;
+                        }
+
+                        @* Affichage du badge uniquement si un dossier existe *@
+                        @if (dernierDossier != null)
+                        {
+                            @switch (statut)
+                            {
+                                case StatutDossier.Soumis:
+                                    <div class="custom-badge bg-warning">Soumis</div>
+                                    ;
+                                    break;
+                                case StatutDossier.EnCours:
+                                    <div class="custom-badge bg-primary">En cours</div>
+                                    ;
+                                    break;
+                                case StatutDossier.Valide:
+                                    <div class="custom-badge bg-success">Validé</div>
+                                    ;
+                                    break;
+                                case StatutDossier.Rejete:
+                                    <div class="custom-badge bg-danger">Rejeté</div>
+                                    ;
+                                    break;
+                            }
+                        }
                     </td>
                     <td>@item.Email</td>
                     <td>@(item.MustChangePassword ? "Oui" : "Non")</td>

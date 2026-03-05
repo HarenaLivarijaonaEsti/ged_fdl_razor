@@ -50,7 +50,7 @@ namespace ged_fdl_razor.Enums
         [Display(Name = "Rapport final du projet antérieur financé par le FDL")]
         RapportFinalProjetAnterieur
     }
-    // ✅ Méthode d'extension pour l'affichage DisplayName
+    // Méthode d'extension pour l'affichage DisplayName
     public static class TypeDocumentExtensions
     {
         public static string GetDisplayName(this TypeDocument doc)

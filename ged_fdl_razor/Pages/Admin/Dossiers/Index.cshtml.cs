@@ -31,6 +31,15 @@ namespace ged_fdl_razor.Pages.Admin.Dossiers
             if (communeId.HasValue)
             {
                 query = query.Where(d => d.CommuneId == communeId);
+                // 🔑 RESET du flag uniquement pour cette commune
+                var commune = await _context.Communes
+                    .FirstOrDefaultAsync(c => c.CommuneID == communeId.Value);
+
+                if (commune != null && commune.HasNewDocuments)
+                {
+                    commune.HasNewDocuments = false;
+                    await _context.SaveChangesAsync();
+                }
             }
 
             DossierFinancement = await query.ToListAsync();

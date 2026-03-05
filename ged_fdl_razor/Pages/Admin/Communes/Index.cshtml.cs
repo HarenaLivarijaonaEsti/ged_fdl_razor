@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ged_fdl_razor.Data;
@@ -25,7 +24,9 @@ namespace ged_fdl_razor.Pages.Admin.Communes
 
         public async Task OnGetAsync()
         {
-            Commune = await _context.Communes.ToListAsync();
+            Commune = await _context.Communes
+                .Include(c => c.Dossiers) // <-- essentiel pour afficher les badges
+                .ToListAsync();
         }
     }
 }

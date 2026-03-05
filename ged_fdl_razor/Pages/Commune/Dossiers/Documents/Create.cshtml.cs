@@ -1,4 +1,4 @@
-using ged_fdl_razor.Data;
+﻿using ged_fdl_razor.Data;
 using ged_fdl_razor.Enums;
 using ged_fdl_razor.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -75,12 +75,47 @@ namespace ged_fdl_razor.Pages.Commune.Dossiers.Documents
             Document.DateUpload = DateTime.UtcNow;
 
             _context.Documents.Add(Document);
+
+            // Mise à jour du flag
+            var commune = await _context.Communes
+                .FirstOrDefaultAsync(c => c.CommuneID == dossier.CommuneId);
+
+            if (commune != null)
+                commune.HasNewDocuments = true;
+
+            // ================================
+            // ✅ NOUVEAU : Mise à jour statut
+            // ================================
+
+            // Tous les types requis
+            var typesRequis = Enum.GetValues(typeof(TypeDocument))
+                .Cast<TypeDocument>()
+                .ToList();
+
+            // Types déjà présents en base
+            var typesDeja = await _context.Documents
+                .Where(d => d.DossierFinancementId == DossierId)
+                .Select(d => d.Type)
+                .ToListAsync();
+
+            // Ajouter le type qu'on vient d'insérer
+            typesDeja.Add(Document.Type);
+
+            bool dossierComplet = !typesRequis.Except(typesDeja).Any();
+
+            if (dossier.Statut == StatutDossier.Brouillon && dossierComplet)
+            {
+                dossier.Statut = StatutDossier.Soumis;
+            }
+
+            // ================================
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Commune/Dossier", new { id = CommuneId });
         }
 
-        // M�thode centrale de filtrage
+        // Méthode centrale de filtrage
         private async Task ChargerTypesDisponibles()
         {
             var typesDejaUtilises = await _context.Documents

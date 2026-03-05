@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ged_fdl_razor.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRoleToCommune : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,17 +15,18 @@ namespace ged_fdl_razor.Migrations
                 name: "Communes",
                 columns: table => new
                 {
-                    CommuneID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nom = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
-                    MustChangePassword = table.Column<bool>(type: "INTEGER", nullable: false),
-                    District = table.Column<string>(type: "TEXT", nullable: false),
-                    Region = table.Column<string>(type: "TEXT", nullable: false),
-                    Role = table.Column<string>(type: "TEXT", nullable: false),
-                    DateCreation = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
+                    CommuneID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nom = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MustChangePassword = table.Column<bool>(type: "bit", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    HasNewDocuments = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,14 +37,14 @@ namespace ged_fdl_razor.Migrations
                 name: "DossiersFinancement",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Titre = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    DateCreation = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateSoumission = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Statut = table.Column<int>(type: "INTEGER", nullable: false),
-                    CommuneId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DateValidation = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Titre = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateSoumission = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Statut = table.Column<int>(type: "int", nullable: false),
+                    CommuneId = table.Column<int>(type: "int", nullable: false),
+                    DateValidation = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,15 +61,15 @@ namespace ged_fdl_razor.Migrations
                 name: "Documents",
                 columns: table => new
                 {
-                    DocumentID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nom = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    ContentType = table.Column<string>(type: "TEXT", nullable: false),
-                    Taille = table.Column<long>(type: "INTEGER", nullable: false),
-                    Contenu = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    DossierFinancementId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DateUpload = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    DocumentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nom = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Taille = table.Column<long>(type: "bigint", nullable: false),
+                    Contenu = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    DossierFinancementId = table.Column<int>(type: "int", nullable: false),
+                    DateUpload = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,12 +86,12 @@ namespace ged_fdl_razor.Migrations
                 name: "Remarques",
                 columns: table => new
                 {
-                    RemarqueID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Texte = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
-                    DossierFinancementId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CommuneId = table.Column<int>(type: "INTEGER", nullable: true),
-                    DateCreation = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    RemarqueID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Texte = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    DossierFinancementId = table.Column<int>(type: "int", nullable: false),
+                    CommuneId = table.Column<int>(type: "int", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

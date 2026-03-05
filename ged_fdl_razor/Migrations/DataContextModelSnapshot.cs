@@ -41,6 +41,9 @@ namespace ged_fdl_razor.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("HasNewDocuments")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -67,21 +70,6 @@ namespace ged_fdl_razor.Migrations
                     b.HasKey("CommuneID");
 
                     b.ToTable("Communes");
-
-                    b.HasData(
-                        new
-                        {
-                            CommuneID = 1,
-                            DateCreation = new DateTime(2026, 2, 26, 5, 35, 5, 737, DateTimeKind.Utc).AddTicks(9947),
-                            District = "Central",
-                            Email = "admin@fdl.mg",
-                            IsActive = true,
-                            MustChangePassword = true,
-                            Nom = "Admin",
-                            PasswordHash = "admin",
-                            Region = "Analamanga",
-                            Role = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("ged_fdl_razor.Models.Document", b =>

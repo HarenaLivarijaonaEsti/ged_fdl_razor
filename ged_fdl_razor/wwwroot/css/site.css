@@ -6,14 +6,77 @@ html {
     position: relative;
     min-height: 100%;
 }
-table a {
-    color: white;
-    text-decoration: none;
+
+
+.highlight-commune {
+    background-color: #fff3cd !important;
+    font-weight: 500;
 }
+.highlight-commune a {
+        color: darkslategrey !important;
+    }
+
+.highlight-commune a:hover {
+            color: #0d6efd !important;
+        }
+
+    .highlight-commune td {
+        color: black !important;
+    }
+
+
+    table a {
+        color: white;
+        text-decoration: none;
+    }
 
     table a:hover {
         color: darkseagreen;
     }
+
+/* Badge style Bootstrap */
+.custom-badge {
+    display: inline-block;
+    padding: 0.25em 0.55em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    border-radius: 999px; /* forme capsule badge */
+    margin-left: 0.35rem;
+
+    /* Supprime l'effet bouton */
+    box-shadow: none;
+    border: none;
+
+    /* Annule le CSS global */
+    color: inherit !important;
+    background-color: inherit !important;
+}
+
+/* Couleurs Bootstrap */
+.custom-badge.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.custom-badge.bg-primary {
+    background-color: #0d6efd !important;
+    color: #fff !important;
+}
+
+.custom-badge.bg-success {
+    background-color: #198754 !important;
+    color: #fff !important;
+}
+
+.custom-badge.bg-danger {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
 
 @media (max-width: 1200px) {
     html {
