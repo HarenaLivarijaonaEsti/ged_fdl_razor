@@ -27,8 +27,6 @@
 
     <hr />
 
-    <h2 class="fdl-subtitle">Dossiers soumis</h2>
-
     @if (Model.Commune?.Dossiers?.Any() == true)
     {
         <div class="fdl-accordion">
@@ -36,7 +34,7 @@
             {
                 <div class="fdl-card">
                     <div class="fdl-card-header" onclick="this.nextElementSibling.classList.toggle('open')">
-                        @dossier.Titre (@dossier.DateSoumission?.ToString("dd/MM/yyyy"))
+                        @dossier.Titre @dossier.DateSoumission?.ToString("dd/MM/yyyy") (Statut : @dossier.Statut)
                     </div>
                     <div class="fdl-card-body">
                         <h4>Documents</h4>
@@ -59,7 +57,7 @@
                                         {
                                             <tr>
                                                 <td>@doc.Nom</td>
-                                                <td>@doc.Type</td>
+                                                <td>@Html.DisplayFor(modelItem => @doc.Type)</td>
                                                 <td>@doc.Taille</td>
                                                 <td>
                                                     <a asp-page-handler="Download" asp-route-id="@doc.DocumentID" class="fdl-btn fdl-btn-success">Télécharger</a>
