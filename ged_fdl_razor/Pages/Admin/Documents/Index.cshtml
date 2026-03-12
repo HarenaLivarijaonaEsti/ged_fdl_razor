@@ -14,9 +14,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Document[0].Nom)</th>
             <th>@Html.DisplayNameFor(model => model.Document[0].Type)</th>
-            <th>@Html.DisplayNameFor(model => model.Document[0].ContentType)</th>
             <th>@Html.DisplayNameFor(model => model.Document[0].Taille)</th>
             <th>Fichier</th>
             <th>Dossier de financement</th>
@@ -28,9 +26,7 @@
         @foreach (var item in Model.Document)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Nom)</td>
                 <td>@Html.DisplayFor(modelItem => item.Type)</td>
-                <td>@Html.DisplayFor(modelItem => item.ContentType)</td>
                 <td>@Html.DisplayFor(modelItem => item.Taille)</td>
 
                 <!-- Bouton Télécharger -->
@@ -64,6 +60,12 @@
                 <td>|
                     <a asp-page="./Details" asp-route-id="@item.DocumentID">Details</a> |
                     <a asp-page="./Delete" asp-route-id="@item.DocumentID">Delete</a>
+                    <a asp-page="/Admin/Remarques/Create"
+                       asp-route-communeId="@(item.DossierFinancement?.CommuneId)"
+                       asp-route-dossierId="@(item.DossierFinancementId)"
+                       class="btn btn-sm btn-success">
+                        Ajouter remarque
+                    </a>
                 </td>
             </tr>
         }

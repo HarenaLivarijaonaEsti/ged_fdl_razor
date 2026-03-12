@@ -27,13 +27,17 @@ namespace ged_fdl_razor.Pages.Admin.Remarques
         // ===============================
         // OnGet modifié pour recevoir communeId
         // ===============================
-        public IActionResult OnGet(int? communeId)
+        public IActionResult OnGet(int? communeId, int? dossierId)
         {
             ChargerCommunes();
 
             if (communeId.HasValue)
             {
                 Remarque.CommuneId = communeId.Value;
+            }
+            if (dossierId.HasValue)
+            {
+                Remarque.DossierFinancementId = dossierId.Value;
             }
 
             return Page();

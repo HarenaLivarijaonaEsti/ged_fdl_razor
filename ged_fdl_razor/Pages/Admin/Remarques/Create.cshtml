@@ -83,6 +83,7 @@
                             option.value = item.id;
                             option.text = item.titre;
 
+                            // Préselection du dossier si on a un selectedDossierId
                             if (selectedDossierId && selectedDossierId == item.id) {
                                 option.selected = true;
                             }
@@ -102,8 +103,10 @@
 
         // Précharger automatiquement si communeId est déjà défini
         var initialCommuneId = document.getElementById("communeSelect").value;
+        var initialDossierId = "@Model.Remarque.DossierFinancementId"; // <-- valeur pré-sélectionnée du dossier
+
         if (initialCommuneId) {
-            chargerDossiers(initialCommuneId);
+            chargerDossiers(initialCommuneId, initialDossierId);
         }
     </script>
 }
