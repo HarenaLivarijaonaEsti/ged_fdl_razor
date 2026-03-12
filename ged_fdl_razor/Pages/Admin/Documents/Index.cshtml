@@ -2,72 +2,139 @@
 @model ged_fdl_razor.Pages.Admin.Documents.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Documents";
 }
+<link href="~/css/CommuneAdmin.css" rel="stylesheet" />
 
-<h1>Index</h1>
+<h1>Documents</h1>
 
 <p>
-    <a asp-page="Create" class="btn btn-primary">Create New</a>
+    <a asp-page="Create" class="btn btn-primary">Ajouter un document</a>
 </p>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Document[0].Type)</th>
-            <th>@Html.DisplayNameFor(model => model.Document[0].Taille)</th>
-            <th>Fichier</th>
-            <th>Dossier de financement</th>
-            <th>@Html.DisplayNameFor(model => model.Document[0].DateUpload)</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Document)
-        {
+<!-- Barre de progression -->
+<div class="mb-3">
+    <label for="progressBar">Documents vérifiés :</label>
+    <div class="progress">
+        <div id="progressBar" class="progress-bar bg-warning" role="progressbar"
+             style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            0 / 11
+        </div>
+    </div>
+</div>
+
+<p>
+    <button id="btnValidate" class="btn btn-success">Valider les documents cochés</button>
+</p>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Type)</td>
-                <td>@Html.DisplayFor(modelItem => item.Taille)</td>
-
-                <!-- Bouton Télécharger -->
-                <td>
-                    <a asp-page="./Index"
-                       asp-route-id="@item.DocumentID"
-                       asp-page-handler="Download"
-                       class="btn btn-sm btn-success">
-                        Télécharger
-                    </a>
-                    <a asp-page="./Index"
-                       asp-route-id="@item.DocumentID"
-                       asp-page-handler="Open"
-                       class="btn btn-sm btn-primary">
-                        Ouvrir
-                    </a>
-                
-
-                </td>
-
-
-                <td>
-                    @(item.DossierFinancement != null
-                        ? item.DossierFinancement.Titre + " - " + item.DossierFinancement.Commune?.Nom
-                        : "")
-                </td>
-
-
-                <td>@Html.DisplayFor(modelItem => item.DateUpload)</td>
-
-                <td>|
-                    <a asp-page="./Details" asp-route-id="@item.DocumentID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.DocumentID">Delete</a>
-                    <a asp-page="/Admin/Remarques/Create"
-                       asp-route-communeId="@(item.DossierFinancement?.CommuneId)"
-                       asp-route-dossierId="@(item.DossierFinancementId)"
-                       class="btn btn-sm btn-success">
-                        Ajouter remarque
-                    </a>
-                </td>
+                <th><input type="checkbox" id="selectAll" class="form-check-input" /></th>
+                <th>Type</th>
+                <th>Taille</th>
+                <th>Fichier</th>
+                <th>Dossier / Commune</th>
+                <th>Date Upload</th>
+                <th>Vérifié</th>
+                <th>Actions</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Document)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" class="form-check-input doc-check"
+                               data-id="@item.DocumentID"
+                               @(item.EstVerifie ? "checked" : "") />
+                    </td>
+                    <td>@item.Type</td>
+                    <td>@item.Taille</td>
+                    <td>
+                        <a asp-page-handler="Download" asp-route-id="@item.DocumentID" class="btn btn-sm btn-success">Télécharger</a>
+                        <a asp-page-handler="Open" asp-route-id="@item.DocumentID" class="btn btn-sm btn-primary">Ouvrir</a>
+                    </td>
+                    <td>@(item.DossierFinancement != null ? item.DossierFinancement.Titre + " - " + item.DossierFinancement.Commune?.Nom : "")</td>
+                    <td>@item.DateUpload.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <span class="badge @(item.EstVerifie ? "bg-success" : "bg-warning")">
+                            @(item.EstVerifie ? "Vérifié" : "Non vérifié")
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.DocumentID">Détails</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.DocumentID">Supprimer</a> |
+                        <a asp-page="/Admin/Remarques/Create"
+                           asp-route-communeId="@(item.DossierFinancement?.CommuneId)"
+                           asp-route-dossierId="@(item.DossierFinancementId)"
+                           class="btn btn-sm btn-success">Ajouter remarque</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<script>
+    const progressBar = document.getElementById('progressBar');
+    const selectAll = document.getElementById('selectAll');
+    const btnValidate = document.getElementById('btnValidate');
+
+    function updateProgressBar() {
+        const checkedCount = document.querySelectorAll('.doc-check:checked').length;
+        const totalCount = document.querySelectorAll('.doc-check').length;
+        const percent = totalCount === 0 ? 0 : (checkedCount / totalCount) * 100;
+
+        progressBar.style.width = percent + "%";
+        progressBar.setAttribute('aria-valuenow', checkedCount);
+        progressBar.innerText = checkedCount + " / " + totalCount;
+        progressBar.classList.toggle("bg-success", checkedCount === totalCount);
+        progressBar.classList.toggle("bg-warning", checkedCount < totalCount);
+    }
+
+    // Sélectionner/désélectionner tout
+    selectAll?.addEventListener('change', () => {
+        document.querySelectorAll('.doc-check').forEach(cb => cb.checked = selectAll.checked);
+        updateProgressBar();
+    });
+
+    document.querySelectorAll('.doc-check').forEach(cb => {
+        cb.addEventListener('change', updateProgressBar);
+    });
+
+    // Valider tous les documents (cochés et décochés)
+    btnValidate?.addEventListener('click', async () => {
+        const allDocs = Array.from(document.querySelectorAll('.doc-check'))
+                             .map(cb => ({ id: parseInt(cb.dataset.id), isChecked: cb.checked }));
+
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        try {
+            const res = await fetch('@Url.Page("/Admin/Documents/Index", null, new { handler = "ValiderDocuments" })', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token
+                },
+                body: JSON.stringify({ documents: allDocs })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                alert("Documents validés avec succès !");
+                location.reload();
+            } else {
+                alert("Erreur lors de la validation.");
+            }
+        } catch (err) {
+            alert("Erreur réseau lors de l'enregistrement.");
         }
-    </tbody>
-</table>
+    });
+
+    updateProgressBar();
+</script>

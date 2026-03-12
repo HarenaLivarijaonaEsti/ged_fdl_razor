@@ -25,5 +25,6 @@ namespace ged_fdl_razor.Models
         public DossierFinancement? DossierFinancement { get; set; }
 
         public DateTime DateUpload { get; set; } = DateTime.UtcNow;
+        public bool EstVerifie { get; set; } = false;
     }
 }

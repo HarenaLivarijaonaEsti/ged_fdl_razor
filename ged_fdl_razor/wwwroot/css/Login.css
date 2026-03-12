@@ -8,7 +8,7 @@
 }
 
 html {
-    font-size: 22px;
+    font-size: 1rem;
 }
 
 body {
@@ -54,7 +54,7 @@ body {
    TITRE
 ============================ */
 h1 {
-    font-size: 3.2rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 40px;
     color: #ffffff;

@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Liste des Communes";
 }
-
+<link href="~/css/CommuneAdmin.css" rel="stylesheet" />
 <h1>@ViewData["Title"]</h1>
 
 <p>
@@ -73,9 +73,9 @@
                     <td>@item.DateCreation.ToString("dd/MM/yyyy")</td>
                     <td>@(item.IsActive ? "Oui" : "Non")</td>
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@item.CommuneID" class="btn btn-sm btn-warning">Edit</a>
-                        <a asp-page="./Details" asp-route-id="@item.CommuneID" class="btn btn-sm btn-info">Détails</a>
-                        <a asp-page="./Delete" asp-route-id="@item.CommuneID" class="btn btn-sm btn-danger">Supprimer</a>
+                        <a asp-page="./Edit" asp-route-id="@item.CommuneID" >Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.CommuneID" >Détails</a>
+                        <a asp-page="./Delete" asp-route-id="@item.CommuneID" >Supprimer</a>
                     </td>
                 </tr>
             }
